@@ -1,0 +1,4915 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2025-07-14 16:55+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: Content of: <sect1><title>
+#: doc/src/sgml/pg_tde_en.sgml:3
+msgid "pg_tde"
+msgstr ""
+
+#. type: Content of: <sect1><para>
+#: doc/src/sgml/pg_tde_en.sgml:5
+msgid ""
+"<literal>pg_tde</literal> extension that provides Transparent Data "
+"Encryption (TDE) to protect data at rest. <literal>pg_tde</literal> ensures "
+"that the data stored on disk is encrypted, and that no one can read it "
+"without the proper encryption keys, even if they gain access to the physical "
+"storage media."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:13
+msgid "Quickstart"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:15
+msgid "Installation"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:17
+msgid ""
+"The extension must be added to the "
+"<literal>shared_preload_libraries</literal>.  You also need to restart the "
+"server after changing <literal>shared_preload_libraries</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:21
+#, no-wrap
+msgid "  shared_preload_libraries = 'pg_tde'\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:24
+msgid "Then you should install the <literal>pg_tde</literal> extension."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:27 doc/src/sgml/pg_tde_en.sgml:587
+#, no-wrap
+msgid "CREATE EXTENSION pg_tde;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:30
+msgid ""
+"If GOST algorithms are needed (magma or kuznyechik), install the required "
+"OpenSSL modules. You can build from source or install via packages."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:35
+msgid ""
+"There is list of known packages for different distributions that contain "
+"GOST module for OpenSSL:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:41
+msgid "<literal>libgost-astra</literal> - Astra Linux"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:46
+msgid "<literal>openssl-gost-engine</literal> - AltLinux"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:51
+msgid ""
+"<literal>libengine-gost-openssl</literal> or "
+"<literal>libengine-gost-openssl1.1</literal> - Debian/Ubuntu"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:57
+msgid "<literal>openssl-gost-engine</literal> - RedOS"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:62
+msgid ""
+"For other distributions you have to build it from source code.  Project "
+"source code is located in <ulink "
+"url=\"https://github.com/gost-engine/engine\"> GitHub repository</ulink>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:67
+msgid ""
+"When GOST modules installed you might need to update OpenSSL configuration.  "
+"Some packages (i.e. <literal>libgost-astra</literal>) do it automatically.  "
+"For others you might have to update configuration manually."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:73 doc/src/sgml/pg_tde_en.sgml:967
+msgid "Creating an encrypted table"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:75
+msgid "Register a key provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:78
+#, no-wrap
+msgid ""
+"  SELECT pg_tde_add_database_key_provider_file('file-provider', "
+"'/tmp/test-file-provider');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:82
+msgid "<literal>file-provider</literal> can only be used for debugging purposes."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:86
+msgid "Create a primary key:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:89
+#, no-wrap
+msgid ""
+"  SELECT pg_tde_set_key_using_database_key_provider('test-key', "
+"'file-provider');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:92
+msgid "Create an encrypted table:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:95
+#, no-wrap
+msgid "  CREATE TABLE enc_tbl(x int) USING tde_heap;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:98
+msgid "Check if the table is encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:101
+#, no-wrap
+msgid "  SELECT pg_tde_is_encrypted('enc_tbl'), pg_tde_get_algorithm('enc_tbl');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:104
+msgid "Creating an encrypted table with a choice of encryption algorithm:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:107
+#, no-wrap
+msgid "  CREATE TABLE enc_tbl1(x int) USING tde_heap WITH (encryptor='magma');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:112
+msgid "What is Transparent Data Encryption (TDE)?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:114
+msgid ""
+"Transparent Data Encryption (TDE) protects your data at rest by ensuring "
+"that even if the underlying storage is compromised, the data remains "
+"unreadable without the correct encryption keys. This is especially critical "
+"for environments handling sensitive, regulated, or high-value information."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:121
+msgid ""
+"Encryption happens transparently in the background, with minimal impact on "
+"database operations."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:125
+msgid "How TDE Works"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:127
+msgid "To encrypt the data, two types of keys are used:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:132
+msgid ""
+"<emphasis role=\"strong\">Internal encryption keys</emphasis> to encrypt "
+"user data. They are stored internally, near the data that they encrypt."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:139
+msgid ""
+"The <emphasis role=\"strong\">principal key</emphasis> to encrypt database "
+"keys. It is kept separately from the database keys and is managed externally "
+"in the key management store."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:147
+msgid ""
+"You have the following options to store and manage principal keys "
+"externally:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:153
+msgid ""
+"Use the HashiCorp Vault server. Only the back end KV Secrets Engine - "
+"Version 2 (API) is supported."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:159
+msgid ""
+"Use the KMIP-compatible server. <literal>pg_tde</literal> has been tested "
+"with the <ulink "
+"url=\"https://pykmip.readthedocs.io/en/latest/server.html\">PyKMIP</ulink> "
+"server and <ulink url=\"https://www.vaultproject.io/docs/secrets/kmip\">the "
+"HashiCorp Vault Enterprise KMIP Secrets Engine</ulink>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:169
+msgid "The encryption process is the following:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:172
+msgid ""
+"When a user creates an encrypted table using <literal>pg_tde</literal>, a "
+"new random key is generated internally for that table and is encrypted using "
+"the AES-CBC-256 cipher algorithm. This key is used to encrypt all data the "
+"user inserts in that table. Eventually the encrypted data gets stored in the "
+"underlying storage."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:180
+msgid ""
+"The internal key itself is encrypted using the principal key.  The principal "
+"key is stored externally in the key management store."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:185
+msgid ""
+"Similarly when the user queries the encrypted table, the principal key is "
+"retrieved from the key store to decrypt the internal key. Then the same "
+"unique internal key for that table is used to decrypt the data, and "
+"unencrypted data gets returned to the user. So, effectively, every TDE table "
+"has a unique key, and each table key is encrypted using the principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:194
+msgid "Encrypted Data Scope"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:196
+msgid "<literal>pg_tde</literal> encrypts the following components:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:201
+msgid ""
+"<emphasis role=\"strong\">User data</emphasis> in tables using the "
+"extension, including associated TOAST data. The table metadata (column "
+"names, data types, etc.) is not encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:208
+msgid ""
+"<emphasis role=\"strong\">Write-Ahead Log (WAL)  data</emphasis> for the "
+"entire database cluster. This includes WAL data in encrypted and "
+"non-encrypted tables."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:215
+msgid "<emphasis role=\"strong\">Indexes</emphasis> associated encrypted tables."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:222
+msgid "Table Access Methods and TDE"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:224
+msgid ""
+"A table access method is the way how <productname>Tantor SE</productname> "
+"stores the data in a table. The default table access method is "
+"<literal>heap</literal>. <productname>Tantor SE</productname> organizes data "
+"in a heap structure, meaning there is no particular order to the rows in the "
+"table. Each row is stored independently and identified by its unique row "
+"identifier (TID)."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:232
+msgid "How tde_heap works"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:234
+msgid ""
+"The <literal>tde_heap</literal> access method works on top of the default "
+"<literal>heap</literal> access method and is a marker to point which tables "
+"require encryption."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:239
+msgid ""
+"Data in buffers stored unencrypted. Encryption and decryption happens only "
+"when read/write request to disk occurs."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:243
+msgid "Thus, there is no overhead for internal operations."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:247
+msgid "Changing the default table access method"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:249
+msgid ""
+"You can change the default table access method so that every table in the "
+"entire database cluster is created using the custom access method. For "
+"example, you can enable data encryption by default by defining the "
+"<literal>tde_heap</literal> as the default table access method."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:257
+msgid "However, consider the following before making this change:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:262
+msgid ""
+"This is a global setting and applies across the entire database cluster and "
+"not just a single database. We recommend setting it with caution because all "
+"tables and materialized views created without an explicit access method in "
+"their <literal>CREATE</literal> statement will default to the specified "
+"table access method."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:272
+msgid ""
+"You must create the <literal>pg_tde</literal> extension and configure the "
+"key provider for all databases before you modify the "
+"configuration. Otherwise <productname>Tantor SE</productname> won’t find the "
+"specified access method and will throw an error."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:280
+msgid "Here is how you can set the new default table access method:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:285
+msgid ""
+"Add the access method to the <literal>default_table_access_method</literal> "
+"parameter:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:289
+msgid "<emphasis role=\"strong\">Via the SQL statement</emphasis>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:292
+msgid ""
+"Use the <literal>ALTER SYSTEM</literal> command. This requires superuser or "
+"ALTER SYSTEM privileges."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:296
+#, no-wrap
+msgid ""
+"  ALTER SYSTEM SET default_table_access_method = tde_heap;\n"
+"  "
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:299
+msgid "<emphasis role=\"strong\">Via the configuration file</emphasis>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:303
+msgid ""
+"Edit the <literal>postgresql.conf</literal> configuration file and add the "
+"value for the <literal>default_table_access_method</literal> parameter."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:309
+#, no-wrap
+msgid ""
+"  default_table_access_method = 'tde_heap'\n"
+"  "
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:312
+msgid "<emphasis role=\"strong\">Via the SET command</emphasis>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:315
+msgid ""
+"You can use the SET command to change the default table access method "
+"temporarily, for the current session."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:319
+msgid ""
+"Unlike modifying the <literal>postgresql.conf</literal> file or using the "
+"<literal>ALTER SYSTEM</literal> command, the changes you make via the "
+"<literal>SET</literal> command don’t persist after the session ends."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:325
+msgid ""
+"You also don’t need to have the superuser privileges to run the "
+"<literal>SET</literal> command."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:329
+msgid "You can run the SET command anytime during the session."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:333
+#, no-wrap
+msgid ""
+"  SET default_table_access_method = tde_heap;\n"
+"  "
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:338
+msgid "Reload the configuration to apply the changes:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:342
+#, no-wrap
+msgid ""
+"  SELECT pg_reload_conf();\n"
+"  "
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:349
+msgid "Limitations of pg_tde"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:353
+msgid ""
+"Keys in the local keyfile provider are stored unencrypted. It is not "
+"recommended for production use. For better security we recommend using "
+"another KMS, like HashiCorp Vault or KMIP."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:360
+msgid ""
+"System tables are not encrypted. This means that statistics data and "
+"database metadata are not encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:366
+msgid "Temporary files used during work (for sorting or hashing) are not encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:372
+msgid ""
+"Some tools that work with WAL will fail if it is encrypted.  They include: "
+"<literal>pg_rewind</literal>, <literal>pg_resetwal</literal>, "
+"<literal>pg_upgrade</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:379
+msgid "WAL-G does not support sending WAL deltas if the WAL is encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:384
+msgid ""
+"Tables are encrypted using block cipher. It means that corruption of a "
+"single byte in the end of page will invalidate the whole page and after "
+"decryption there will be garbage. Tools that expect to work with "
+"<literal>heap</literal> access method can misbehave. For example, "
+"<literal>pg_amcheck</literal> or <literal>amcheck</literal> might not be "
+"able to recover pages because page validation will fail (header is invalid)."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:396
+msgid "Key Rotation"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:398
+msgid "Currently, only principal key rotation is supported."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:401
+msgid "Rotation simply involves assigning a new principal key:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:405
+#, no-wrap
+msgid "SELECT pg_tde_set_key_using_database_key_provider('new-key');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:408
+msgid "Existing internal keys will be re-encrypted; table data remains unchanged."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:412 doc/src/sgml/pg_tde_en.sgml:467
+#: doc/src/sgml/pg_tde_en.sgml:983
+msgid "Example:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:416
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_database_key_provider_file('file-provider', "
+"'/tmp/test-file-provider');\n"
+"SELECT pg_tde_set_key_using_database_key_provider('test-key-1', "
+"'file-provider');\n"
+"CREATE TABLE enc_tbl(x int) USING tde_heap;\n"
+"INSERT INTO enc_tbl(x) VALUES (1), (2), (3), (4), (5);\n"
+"\n"
+"-- Rotate the principal key\n"
+"SELECT pg_tde_set_key_using_database_key_provider('test-key-2');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:425
+msgid "Replication"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:427
+msgid ""
+"Physical replication is fully supported. WAL records related to TDE are "
+"replayed on the replica."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:432
+msgid "For GOST encryption, ensure required modules are installed on the replica."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:438
+msgid "OpenSSL Configuration"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:440
+msgid ""
+"On startup, the extension loads an OpenSSL configuration file.  Use "
+"<literal>pg_tde.openssl_config</literal> to specify a custom path. If unset, "
+"the system default is used (e.g., <literal>/etc/ssl/openssl.cnf</literal> on "
+"Astra Linux)."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:446
+msgid ""
+"Some packages (i.e. <literal>libgost-astra</literal> on Astra Linux) update "
+"configuration automatically."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:451
+msgid ""
+"In our distribution, GOST modules (<literal>gost.so</literal>, "
+"<literal>gostprov.so</literal>) are located at "
+"<literal>/opt/tantor/db/{VERSION}/lib</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:457
+msgid ""
+"The <literal>pg_tde.preinit_algs</literal> parameter specifies algorithms to "
+"preload at startup for performance and validation."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:461
+msgid ""
+"Format: comma-separated list (like "
+"<literal>shared_preload_libraries</literal>). Supported: "
+"<literal>aes</literal>, <literal>chacha20</literal>, "
+"<literal>kuznyechik</literal>, <literal>magma</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:470
+#, no-wrap
+msgid "pg_tde.preinit_algs = 'aes,chacha20,kuznyechik'\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:475
+msgid "Features"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:477
+msgid "The following features are available for the extension:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:482
+msgid "Table encryption, including:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:487
+msgid "Data tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:492
+msgid "Index data for encrypted tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:497
+msgid "TOAST tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:502
+msgid "Temporary tables created during database operations"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:507
+msgid "Metadata of those tables is not encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:512
+msgid ""
+"Global Write-Ahead Log (WAL) encryption for data in both encrypted and "
+"non-encrypted tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:518
+msgid "Multiple Key management options"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:524
+msgid "Configure pg_tde"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:526
+msgid ""
+"Before you can use <literal>pg_tde</literal> for data encryption, you must "
+"enable the extension and configure <productname>Tantor SE</productname> to "
+"load it at startup. This setup ensures that the necessary hooks and shared "
+"memory are available for encryption operations."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:532
+msgid ""
+"The <literal>pg_tde</literal> extension requires additional shared "
+"memory. You need to configure <productname>Tantor SE</productname> to "
+"prelaod it at startup."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:538
+msgid "Configure shared_preload_libraries"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:541
+msgid ""
+"You can configure the <literal>shared_preload_libraries</literal> parameter "
+"in two ways:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:548
+msgid ""
+"Add the following line to the <literal>shared_preload_libraries</literal> "
+"file:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><itemizedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:553
+#, no-wrap
+msgid "shared_preload_libraries = 'pg_tde'\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:558
+msgid ""
+"Use the <literal>ALTER SYSTEM</literal> command. Run the following command "
+"in <literal>psql</literal> as a <emphasis "
+"role=\"strong\">superuser</emphasis>:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><itemizedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:564
+#, no-wrap
+msgid "ALTER SYSTEM SET shared_preload_libraries = 'pg_tde';\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:571
+msgid ""
+"Restart the <productname>Tantor SE</productname> cluster to apply the "
+"configuration."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:577
+msgid "Create the extension"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:580
+msgid ""
+"After restarting <productname>Tantor SE</productname>, connect to "
+"<literal>psql</literal> as a <emphasis role=\"strong\">superuser</emphasis> "
+"or <emphasis role=\"strong\">database owner</emphasis> and run:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:590
+msgid ""
+"See <link linkend=\"sql-createextension\">CREATE EXTENSION</link> for more "
+"details."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:595
+msgid ""
+"The <literal>pg_tde</literal> extension is created only for the current "
+"database. To enable it for other databases, you must run the command in each "
+"individual database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:601
+msgid "(Optional) Enable pg_tde by default"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:604
+msgid ""
+"To automatically have <literal>pg_tde</literal> enabled for all new "
+"databases, modify the <literal>template1</literal> database:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:609
+#, no-wrap
+msgid "psql -d template1 -c 'CREATE EXTENSION pg_tde;'\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:613
+msgid ""
+"You can use external key providers to manage encryption keys. The "
+"recommended approach is to use the Key Management Store (KMS). See the next "
+"step on how to configure the KMS."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:619
+msgid "Configure Key Management (KMS)"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:621
+msgid ""
+"In production environments, storing encryption keys locally on the "
+"<productname>Tantor SE</productname> server can introduce security risks. To "
+"enhance security, <literal>pg_tde</literal> supports integration with "
+"external Key Management Systems (KMS) through a Global Key Provider "
+"interface."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:628
+msgid ""
+"This section describes how you can configure <literal>pg_tde</literal> to "
+"use the local and external key providers. To use an external KMS with "
+"<literal>pg_tde</literal>, follow these two steps:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:636
+msgid "Configure a Key Provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:641
+msgid ""
+"Set the <link linkend=\"pg_tde-global-principal-key-configuration\">Global "
+"Principal Key</link>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:648 doc/src/sgml/pg_tde_en.sgml:862
+msgid ""
+"While keyfiles may be acceptable for <emphasis "
+"role=\"strong\">local</emphasis> or <emphasis role=\"strong\">testing "
+"environments</emphasis>, KMS integration is the recommended approach for "
+"production deployments."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:657
+msgid "KMIP Configuration"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:659
+msgid ""
+"To use a Key Management Interoperability Protocol (KMIP) server with "
+"<literal>pg_tde</literal>, you must configure it as a global key "
+"provider. This setup enables <literal>pg_tde</literal> to securely fetch and "
+"manage encryption keys from a centralized key management appliance."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:667
+msgid ""
+"You need the root certificate of the KMIP server and a client "
+"key/certificate pair with permissions to create and read keys on the server."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:673
+msgid ""
+"It is recommended to review the <ulink "
+"url=\"https://developer.hashicorp.com/vault/tutorials/enterprise/kmip-engine\">configuration "
+"guidelines for the HashiCorp Vault Enterprise KMIP Secrets Engine</ulink> if "
+"you’re using Vault."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:679
+msgid ""
+"For testing purposes, you can use a lightweight PyKMIP server, which enables "
+"easy certificate generation and basic KMIP behavior. If you’re using a "
+"production-grade KMIP server, ensure you obtain valid, trusted certificates "
+"from the key management appliance."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:686 doc/src/sgml/pg_tde_en.sgml:787
+#: doc/src/sgml/pg_tde_en.sgml:2109
+msgid "Example usage"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:689
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_kmip(\n"
+"    'provider-name',\n"
+"    'kmip-IP',\n"
+"    5696,\n"
+"    '/path_to/server_certificate.pem',\n"
+"    '/path_to/client_cert.pem',\n"
+"    '/path_to/client_key.pem'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:700 doc/src/sgml/pg_tde_en.sgml:800
+msgid "Parameter descriptions"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:704
+msgid ""
+"<literal>provider-name</literal> is the name of the provider. You can "
+"specify any name, it’s for you to identify the provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:711
+msgid ""
+"<literal>kmip-IP</literal> is the IP address of a domain name of the KMIP "
+"server"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:717
+msgid ""
+"<literal>port</literal> is the port to communicate with the KMIP "
+"server. Typically used port is 5696"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:723
+msgid ""
+"<literal>server-certificate</literal> is the path to the certificate file "
+"for the KMIP server"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:729
+msgid "<literal>client_cert</literal> is the path to the client certificate."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:735
+msgid ""
+"<literal>client_key</literal> (optional) is the path to the client key. If "
+"not specified, the certificate key has to contain both the certifcate and "
+"the key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><warning><para>
+#: doc/src/sgml/pg_tde_en.sgml:743
+msgid ""
+"<literal>pg_tde_add_global_key_provider_kmip</literal> currently accepts "
+"only a combined client key and a client certificate for its final parameter, "
+"reffered to as <literal>client key</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:750
+msgid "The following example is for testing purposes only."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:754
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_kmip(\n"
+"    'kmip','127.0.0.1',\n"
+"    5696,\n"
+"    '/tmp/server_certificate.pem',\n"
+"    '/tmp/client_cert_jane_doe.pem',\n"
+"    '/tmp/client_key_jane_doe.pem'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:763 doc/src/sgml/pg_tde_en.sgml:847
+msgid "For more information on related functions, see the link below:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:766 doc/src/sgml/pg_tde_en.sgml:850
+msgid "<link linkend=\"pg_tde-functions\">Functions</link>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:771
+msgid "Vault Configuration"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:773
+msgid ""
+"You can configure <literal>pg_tde</literal> to use HashiCorp Vault as a "
+"global key provider for managing encryption keys securely."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:779
+msgid ""
+"This guide assumes that your Vault server is already set up and "
+"accessible. Vault configuration is outside the scope of this document, see "
+"<ulink url=\"https://developer.hashicorp.com/vault/docs\">Vault’s official "
+"documentation</ulink> for more information."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:790
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_vault_v2(\n"
+"    'provider-name',\n"
+"    'secret_token_path',\n"
+"    'url',\n"
+"    'mount',\n"
+"    'ca_path'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:804
+msgid "<literal>provider-name</literal> is the name to identify this key provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:810
+msgid ""
+"<literal>secret_token</literal> is an access token with read and write "
+"access to the above mount point"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:816 doc/src/sgml/pg_tde_en.sgml:1165
+#: doc/src/sgml/pg_tde_en.sgml:2698
+msgid "<literal>url</literal> is the URL of the Vault server"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:821 doc/src/sgml/pg_tde_en.sgml:1170
+msgid ""
+"<literal>mount</literal> is the mount point where the keyring should store "
+"the keys"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:827 doc/src/sgml/pg_tde_en.sgml:1182
+msgid ""
+"[optional] <literal>ca_path</literal> is the path of the CA file used for "
+"SSL verification"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:833
+msgid ""
+"The following example is for testing purposes only. Use secure tokens and "
+"proper SSL validation in production environments:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:838
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_vault_v2(\n"
+"    'my-vault',\n"
+"    '/path/to/token_file',\n"
+"    'http://vault.vault.svc.cluster.local:8200',\n"
+"    'secret/data',\n"
+"    NULL\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:855
+msgid "Keyring File Configuration"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:857
+msgid ""
+"This setup is intended for development and stores the keys unencrypted in "
+"the specified data file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:871
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_file(\n"
+"    'provider-name',\n"
+"    '/path/to/the/keyring/data.file'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:877
+msgid "The following example is used for testing purposes only:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:881
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_file(\n"
+"    'file-keyring',\n"
+"    '/tmp/pg_tde_test_local_keyring.per'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:888
+msgid "Global Principal Key Configuration"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:890
+msgid ""
+"You can configure a default principal key using a global key provider. This "
+"key will be used by all databases that do not have their own encryption keys "
+"configured."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:895
+msgid "Create a default principal key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:897 doc/src/sgml/pg_tde_en.sgml:1027
+msgid "Run the following command:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:901
+#, no-wrap
+msgid ""
+"SELECT pg_tde_set_default_key_using_global_key_provider(\n"
+"    'name-of-the-key',\n"
+"    'provider-name',\n"
+"    'ensure_new_key'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:909 doc/src/sgml/pg_tde_en.sgml:2126
+msgid "Parameter description"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:913
+msgid ""
+"<literal>name-of-the-key</literal> is the name of the principal key. You "
+"will use this name to identify the key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:919
+msgid ""
+"<literal>provider-name</literal> is the name of the key provider you added "
+"before. The principal key will be associated with this provider."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:926
+msgid ""
+"<literal>ensure_new_key</literal> defines if a principal key must be "
+"unique. The default value <literal>true</literal> means that you must "
+"speficy a unique key during key rotation. The <literal>false</literal> value "
+"allows reusing an existing principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:936
+msgid ""
+"This example is for testing purposes only. Replace the key name and provider "
+"name with your values:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:941
+#, no-wrap
+msgid ""
+"SELECT pg_tde_set_key_using_global_key_provider(\n"
+"    'test-db-master-key',\n"
+"    'file-vault',\n"
+"    'ensure_new_key'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:949
+msgid "The key is auto-generated."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:953
+msgid ""
+"After this, all databases that do not have something else configured will "
+"use this newly generated principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:960
+msgid "Validate Encryption with pg_tde"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:962
+msgid ""
+"After enabling the <literal>pg_tde</literal> extension for a database, you "
+"can begin encrypting data using the <literal>tde_heap</literal> table access "
+"method."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:971
+msgid ""
+"To create a table with encryption enabled, using the tde_heap access method "
+"as follows:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:975
+#, no-wrap
+msgid ""
+"CREATE TABLE &lt;table_name&gt; (&lt;field&gt; &lt;datatype&gt;) USING "
+"tde_heap\n"
+"  [ WITH (encryptor = aes | kuznyechik | grasshopper | magma | chacha20 ) "
+"];\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:979
+msgid ""
+"You can also specify the storage parameter 'encryptor', which allows you to "
+"select an encryption algorithm."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:986
+#, no-wrap
+msgid ""
+"CREATE TABLE albums (\n"
+"    album_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n"
+"    artist_id INTEGER,\n"
+"    title TEXT NOT NULL,\n"
+"    released DATE NOT NULL\n"
+") USING tde_heap WITH (encryptor = magma);\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:996
+msgid "To check if the data is encrypted, run the following function:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1001
+#, no-wrap
+msgid "SELECT pg_tde_is_encrypted('table_name');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1004
+msgid ""
+"The function returns <literal>t</literal> if the table is encrypted and "
+"<literal>f</literal> - if not."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1010
+msgid "(Optional) Rotate the principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:1015
+msgid ""
+"To re-encrypt the data using a new key, see <link "
+"linkend=\"pg_tde-principal-key-management\">Principal key management</link>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:1020
+msgid "Encrypt existing table"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:1022
+msgid ""
+"You can encrypt an existing table. It requires rewriting the table, so for "
+"large tables, it might take a considerable amount of time."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1031 doc/src/sgml/pg_tde_en.sgml:3806
+#, no-wrap
+msgid "ALTER TABLE table_name SET ACCESS METHOD tde_heap;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><caution><para>
+#: doc/src/sgml/pg_tde_en.sgml:1035
+msgid ""
+"Using <literal>SET ACCESS METHOD</literal> drops hint bits which can impact "
+"query performance. To restore performance, run:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><caution><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1038
+#, no-wrap
+msgid "    SELECT count(*) FROM table_name;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><caution><para>
+#: doc/src/sgml/pg_tde_en.sgml:1041
+msgid ""
+"This forces <productname>Tantor SE</productname> to check every tuple for "
+"visibility and reset the hint bits."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><tip><para>
+#: doc/src/sgml/pg_tde_en.sgml:1046
+msgid ""
+"Want to remove encryption later? See how to <link "
+"linkend=\"pg_tde-remove-encryption-from-an-encrypted-table\">decrypt your "
+"data</link>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:1052
+msgid "Configure WAL Encryption (tech preview)"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1054
+msgid ""
+"Before turning WAL encryption on, you must follow the steps below to create "
+"your first principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:1058
+msgid "Create the principal key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1062
+msgid "Create the <literal>pg_tde</literal> extension if it does not exist:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1067
+#, no-wrap
+msgid "CREATE EXTENSION IF NOT EXISTS pg_tde;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1072
+msgid "Set up the key provider for WAL encryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1075
+msgid "<emphasis role=\"strong\">With KMIP server</emphasis>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1078
+msgid ""
+"Make sure you have obtained the root certificate for the KMIP server and the "
+"keypair for the client. The client key needs permissions to create / read "
+"keys on the server. Find the <ulink "
+"url=\"https://developer.hashicorp.com/vault/tutorials/enterprise/kmip-engine\">configuration "
+"guidelines for the HashiCorp Vault Enterprise KMIP Secrets Engine</ulink>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1087
+msgid ""
+"For testing purposes, you can use the PyKMIP server which enables you to set "
+"up required certificates. To use a real KMIP server, make sure to obtain the "
+"valid certificates issued by the key management appliance."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1094
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_kmip('provider-name','kmip-addr', "
+"5696, '/path_to/server_certificate.pem', '/path_to/client_cert.pem', "
+"'/path_to/client_key.pem');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1097 doc/src/sgml/pg_tde_en.sgml:1154
+#: doc/src/sgml/pg_tde_en.sgml:2687 doc/src/sgml/pg_tde_en.sgml:2772
+#: doc/src/sgml/pg_tde_en.sgml:2868
+msgid "where:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1102 doc/src/sgml/pg_tde_en.sgml:2873
+msgid ""
+"<literal>provider-name</literal> is the name of the provider. You can "
+"specify any name, it’s for you to identify the provider."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1109
+msgid ""
+"<literal>kmip-addr</literal> is the IP address of a domain name of the KMIP "
+"server"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1115
+msgid ""
+"<literal>port</literal> is the port to communicate with the KMIP "
+"server. Typically used port is 5696."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1121 doc/src/sgml/pg_tde_en.sgml:2795
+msgid ""
+"<literal>server-certificate</literal> is the path to the certificate file "
+"for the KMIP server."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1127
+msgid "<literal>client-cert</literal> is the path to the client certificate."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1133 doc/src/sgml/pg_tde_en.sgml:2807
+msgid "<literal>client-key</literal> is the path to the client key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><warning><para>
+#: doc/src/sgml/pg_tde_en.sgml:1140
+msgid "This example is for testing purposes only:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><warning><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1143
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_key_using_global_key_provider_kmip('kmip','127.0.0.1', "
+"5696, '/tmp/server_certificate.pem', '/tmp/client_cert_jane_doe.pem', "
+"'/tmp/client_key_jane_doe.pem');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1147
+msgid "<emphasis role=\"strong\">With HashiCorp Vault</emphasis>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1151
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_global_key_provider_vault_v2('provider-name', "
+"'secret_token_path', 'url', 'mount', 'ca_path');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1159
+msgid "<literal>provider-name</literal> is the name you define for the key provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1176 doc/src/sgml/pg_tde_en.sgml:2709
+msgid ""
+"<literal>secret_token_path</literal> is a path to the file that contains an "
+"access token with read and write access to the above mount point"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1188
+msgid "<emphasis role=\"strong\">With keyring file</emphasis>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1191
+msgid ""
+"This setup is <emphasis role=\"strong\">not recommended</emphasis>, as it is "
+"intended for development.  The keys are stored <emphasis "
+"role=\"strong\">unencrypted</emphasis> in the specified data file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1199
+#, no-wrap
+msgid ""
+"SELECT "
+"pg_tde_add_global_key_provider_file('provider-name','/path/to/the/keyring/data.file');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1204
+msgid "Create principal key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1208
+#, no-wrap
+msgid ""
+"SELECT pg_tde_set_server_key_using_global_key_provider('key', "
+"'provider-name');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1213
+msgid ""
+"Enable WAL level encryption using the <literal>ALTER SYSTEM</literal> "
+"command. You need the privileges of the superuser to run this command:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1219
+#, no-wrap
+msgid "ALTER SYSTEM SET pg_tde.wal_encrypt = on;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1224
+msgid "Restart the server to apply the changes."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:1229
+msgid ""
+"Now WAL files start to be encrypted for both encrypted and unencrypted "
+"tables."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:1233
+msgid ""
+"For more technical references related to architecture, variables or "
+"functions, see <link linkend=\"pg_tde-technical-reference\">Technical "
+"Reference</link>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:1240
+msgid "Technical Reference"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1242
+msgid ""
+"This section covers the internal components and tools that power "
+"<literal>pg_tde</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1246
+msgid ""
+"Use it to understand how encryption is implemented, fine-tune a "
+"configuration, leverage advanced CLI tools and functions for diagnostics and "
+"customization."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:1252
+msgid "Architecture"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1254
+msgid ""
+"<literal>pg_tde</literal> is a <emphasis role=\"strong\">customizable, "
+"complete, data at rest encryption extension</emphasis> for "
+"<productname>Tantor SE</productname>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1259
+msgid "Let’s break down what it means."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1262
+msgid ""
+"<emphasis role=\"strong\">Customizable</emphasis> means that "
+"<literal>pg_tde</literal> aims to support many different use cases:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1269
+msgid ""
+"Encrypting either every table in every database or only some tables in some "
+"databases"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1275
+msgid ""
+"Encryption keys can be stored on various external key storage servers "
+"including Hashicorp Vault, KMIP servers."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1281
+msgid "Using one key for everything or different keys for different databases"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1287
+msgid ""
+"Storing every key on the same key storage, or using different storages for "
+"different databases"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1293
+msgid ""
+"Handling permissions: who can manage database specific or global "
+"permissions, who can create encrypted or not encrypted tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1300
+msgid ""
+"<emphasis role=\"strong\">Complete</emphasis> means that "
+"<literal>pg_tde</literal> aims to encrypt data at rest."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:1304
+msgid ""
+"<emphasis role=\"strong\">Data at rest</emphasis> means everything written "
+"to the disk. This includes the following:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1310
+msgid "Table data files"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1315
+msgid "Indexes"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1320
+msgid "Sequences"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1325
+msgid "Temporary tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1330
+msgid "Write Ahead Log (WAL)"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:1335
+msgid "Encryption architecture"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1337
+msgid "Two-key hierarchy"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1339
+msgid "<literal>pg_tde</literal> uses two kinds of keys for encryption:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1345
+msgid ""
+"Internal keys to encrypt the data. They are stored in <productname>Tantor "
+"SE</productname>’s data directory under <literal>$PGDATA/pg_tde</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1351
+msgid ""
+"Higher-level keys to encrypt internal keys. These keys are called "
+"<quote>principal keys</quote>. They are stored externally, in a Key "
+"Management System (KMS) using the key provider API."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1358
+msgid ""
+"<literal>pg_tde</literal> uses one principal key per database.  Every "
+"internal key for the given database is encrypted using this principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1363
+msgid ""
+"Internal keys are used for specific database files: each file with a "
+"different <link linkend=\"datatype-oid\">Object Identifier (OID)</link> has "
+"a different internal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1368
+msgid ""
+"This means that, for example, a table with 4 indexes will have at least 5 "
+"internal keys - one for the table, and one for each index."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1373
+msgid ""
+"If a table has additional associated relations, such as sequences or a TOAST "
+"table, those relations will also have separate keys."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1379
+msgid "Encryption algorithm"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1381
+msgid ""
+"For encrypting relations <literal>pg_tde</literal> uses the following "
+"encryption algorithms:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1386
+msgid "<literal>AES-CBC-256</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1389
+msgid "<literal>ChaCha20</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1392
+msgid "<literal>GOST 28147-89 Magma</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1395
+msgid "<literal>GOST R 34.12-2015 Kuznyechik</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1399
+msgid "For encrypting WAL <literal>AES-CTR-256</literal> is used."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1402
+msgid ""
+"For encrypting internal keys <literal>AES-GCM-256</literal>. It provides "
+"data authenticity (integrity) so it is impossible in practice to spoof keys."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1407
+msgid "Encryption workflow"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1409
+msgid ""
+"<literal>pg_tde</literal> makes it possible to encrypt everything or only "
+"some tables in some databases."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1413
+msgid ""
+"To support this without metadata changes, encrypted tables are labeled with "
+"a <literal>tde_heap</literal> access method marker."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1418
+msgid ""
+"The <literal>tde_heap</literal> access method is the same as the "
+"<literal>heap</literal> one. It uses the same functions internally without "
+"any changes, but with the different name and ID. In such a way "
+"<literal>pg_tde</literal> knows that <literal>tde_heap</literal> tables are "
+"encrypted and <literal>heap</literal> tables are not."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1426
+msgid ""
+"The initial decision what to encrypt is made using the "
+"<literal>postgres</literal> event trigger mechanism: if a <literal>CREATE "
+"TABLE</literal> or <literal>ALTER TABLE</literal> statement uses the "
+"<literal>tde_heap</literal> clause, the newly created data files are marked "
+"as encrypted. Then file operations encrypt or decrypt the data."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1435
+msgid ""
+"Later decisions are made when a database file is re-created with a different "
+"<literal>relfilenode</literal> as a result of a <literal>TRUNCATE</literal> "
+"or a <literal>VACUUM FULL</literal> command, the newly created file inherits "
+"the encryption information and is either encrypted or not."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1443 doc/src/sgml/pg_tde_en.sgml:3718
+msgid "WAL encryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1445
+msgid ""
+"WAL encryption is controlled globally via a global GUC variable, "
+"<literal>pg_tde.wal_encrypt</literal>, that requires a server restart."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1450
+msgid ""
+"WAL keys also contain the <link linkend=\"wal-internals\">LSN</link> of the "
+"first WAL write after key creation. This allows <literal>pg_tde</literal> to "
+"know which WAL ranges are encrypted or not and with which key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1456
+msgid ""
+"The setting only controls writes so that only WAL writes are encrypted when "
+"WAL encryption is enabled. This means that WAL files can contain both "
+"encrypted and unencrpyted data, depending on what the status of this "
+"variable was when writing the data."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1463
+msgid ""
+"<literal>pg_tde</literal> keeps track of the encryption status of WAL "
+"records using internal keys. When the server is restarted it writes a new "
+"internal key if WAL encryption is enabled, or if it is disabled and was "
+"previously enabled it writes a dummy key signalling that WAL encryption "
+"ended."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1470
+msgid ""
+"With this information the WAL reader code can decide if a specific WAL "
+"record has to be decrypted or not and which key it should use to decrypt it."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1476
+msgid "Encrypting other access methods"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1478
+msgid ""
+"Currently <literal>pg_tde</literal> only encrypts <literal>heap</literal> "
+"tables and other files such as indexes, TOAST tables, sequences that are "
+"related to the <literal>heap</literal> tables."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:1486
+msgid "Key and key provider management"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1488
+msgid "Principal key rotation"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1490
+msgid ""
+"You can rotate principal keys to comply with common policies and to handle "
+"situations with potentially exposed principal keys."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1495
+msgid ""
+"Rotation means that <literal>pg_tde</literal> generates a new version of the "
+"principal key, and re-encrypts the associated internal keys with the new "
+"key. The old principal key is kept as is at the same location, because it "
+"may still be needed to decrypt backups or other databases."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1503
+msgid "Internal key regeneration"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1505
+msgid ""
+"Internal keys for tables, indexes and other data files are fixed once a file "
+"is created. There’s no way to re-encrypt a file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1510
+msgid ""
+"There are workarounds for this, because operations that move the table data "
+"to a new file, such as <literal>VACUUM FULL</literal> or an <literal>ALTER "
+"TABLE</literal> that rewrites the file will create a new key for the new "
+"file, essentially rotating the internal key. This however means taking an "
+"exclusive lock on the table for the duration of the operation, which might "
+"not be desirable for huge tables."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1520
+msgid ""
+"WAL internal keys are also fixed to the respective ranges. To generate a new "
+"WAL key you need to restart the database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1525
+msgid "Internal key storage"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1527
+msgid ""
+"Internal keys and <literal>pg_tde</literal> metadata in general are kept in "
+"a single <literal>$PGDATA/pg_tde</literal> directory. This directory stores "
+"separate files for each database, such as:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1535
+msgid "Encrypted internal keys and internal key mapping to tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1540
+msgid "Information about the key providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1545
+msgid ""
+"Also, the <literal>$PGDATA/pg_tde</literal> directory has a special global "
+"section marked with the OID <literal>1664</literal>, which includes the "
+"global key providers and global internal keys."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1551
+msgid ""
+"The global section is used for WAL encryption. Specific databases can use "
+"the global section too, for scenarios where users configure individual "
+"principal keys for databases but use the same global key provider. For this "
+"purpose, you must enable the global provider inheritance."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1558
+msgid ""
+"The global default principal key uses the special OID "
+"<literal>1663</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1563
+msgid "Key providers (principal key storage)"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1565
+msgid ""
+"Principal keys are stored externally in a Key Management Services (KMS). In "
+"<literal>pg_tde</literal>a KMS is defined as an external key provider."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1570
+msgid "The following key providers are supported:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1575
+msgid ""
+"<ulink "
+"url=\"https://developer.hashicorp.com/vault/docs/what-is-vault\">HashiCorp "
+"Vault</ulink> KV2 secrets engine"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1581 doc/src/sgml/pg_tde_en.sgml:3667
+msgid "<ulink url=\"https://openbao.org/\">OpenBao</ulink> implementation of Vault"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1587
+msgid "KMIP compatible servers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1592
+msgid ""
+"A local file storage. This storage is intended only for development and "
+"testing and is not recommended for production use."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1599
+msgid ""
+"For each key provider <literal>pg_tde</literal> requires a detailed "
+"configuration including the address of the service and the authentication "
+"information."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1604
+msgid ""
+"With these details <literal>pg_tde</literal> does the following based on "
+"user operations:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1610
+msgid "Uploads a new principal key to it after this key is created"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1616
+msgid ""
+"Retrieves the principal key from the service when it is required for "
+"decryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1622
+msgid "Retreival of the principal key is cached so it only happens when necessary."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:1627 doc/src/sgml/pg_tde_en.sgml:2519
+msgid "Key provider management"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1629
+msgid ""
+"Key provider configuration or location may change. For example, a service is "
+"moved to a new address or the principal key must be moved to a different key "
+"provider type.  <literal>pg_tde</literal> supports both these scenarios "
+"enabling you to manage principal keys using simple <link "
+"linkend=\"pg_tde-key-provider-management\">SQL functions</link>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1637
+msgid ""
+"In certain cases you can’t use SQL functions to manage key providers. For "
+"example, if the key provider changed while the server wasn’t running and is "
+"therefore unaware of these changes. The startup can fail if it needs to "
+"access the encryption keys."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1644
+msgid ""
+"For such situations, <literal>pg_tde</literal> also provides <link "
+"linkend=\"pg_tde-cli-tools\">command line tools</link> to recover the "
+"database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1651
+msgid "Sensitive key provider information"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><caution><para>
+#: doc/src/sgml/pg_tde_en.sgml:1654
+msgid ""
+"Authentication details for key providers are sensitive and must be "
+"protected."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><caution><para>
+#: doc/src/sgml/pg_tde_en.sgml:1657
+msgid ""
+"Do not store these credentials in the <literal>$PGDATA</literal> directory "
+"alongside the database. Instead, ensure they are stored in a secure location "
+"with strict file system permissions to prevent unauthorized access."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:1665
+msgid "User interface"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1667
+msgid "Setting up <literal>pg_tde</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1669
+msgid "To use <literal>pg_tde</literal>, users are required to:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1674
+msgid ""
+"Add <literal>pg_tde</literal> to the "
+"<literal>shared_preload_libraries</literal> in "
+"<literal>postgresql.conf</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1681
+msgid ""
+"Execute <literal>CREATE EXTENSION pg_tde</literal> in the databases where "
+"they want to use encryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1687
+msgid ""
+"Optionally, enable <literal>pg_tde.wal_encrypt</literal> in "
+"<literal>postgresql.conf</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1693
+msgid ""
+"Optionally, disable <literal>pg_tde.inherit_global_providers</literal> in "
+"<literal>postgresql.conf</literal> (enabled by default)"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1701
+msgid "Adding providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1703
+msgid ""
+"Keyring providers can be added to either the global or to the database "
+"specific scope."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1707
+msgid ""
+"If <literal>pg_tde.inherit_global_providers</literal> is "
+"<literal>on</literal>, global providers are visible for all databases, and "
+"can be used. If <literal>pg_tde.inherit_global_providers</literal> is "
+"<literal>off</literal>, global providers are only used for WAL encryption."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1715
+msgid "To add a global provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1719
+#, no-wrap
+msgid ""
+"pg_tde_add_global_key_provider_&lt;TYPE&gt;('provider_name', ... details "
+"...)\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1722
+msgid "To add a database specific provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1726
+#, no-wrap
+msgid ""
+"pg_tde_add_database_key_provider_&lt;TYPE&gt;('provider_name', ... details "
+"...)\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1730
+msgid "Changing providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1732
+msgid "To change a value of a global provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1736
+#, no-wrap
+msgid ""
+"pg_tde_change_global_key_provider_&lt;TYPE&gt;('provider_name', ... details "
+"...)\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1739
+msgid "To change a value of a database specific provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1743
+#, no-wrap
+msgid ""
+"pg_tde_change_database_key_provider_&lt;TYPE&gt;('provider_name', "
+"... details ...)\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1746
+msgid "These functions also allow changing the type of a provider."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1749
+msgid ""
+"The functions however do not migrate any data. They are expected to be used "
+"during infrastructure migration, for example when the address of a server "
+"changes."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1754
+msgid ""
+"Note that in these functions do not verify the parameters. For that, see "
+"<literal>pg_tde_verify_key</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1759
+msgid "Changing providers from the command line"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1761
+msgid ""
+"To change a provider from a command line, <literal>pg_tde</literal> provides "
+"the <literal>pg_tde_change_key_provider</literal> command line tool."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1767
+msgid "This tool work similarly to the above functions, with the following syntax:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1772
+#, no-wrap
+msgid ""
+"pg_tde_change_key_provider &lt;dbOid&gt; &lt;providerType&gt; ... details "
+"...\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1775
+msgid ""
+"Note that since this tool is expected to be offline, it bypasses all "
+"permission checks!"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1779
+msgid ""
+"This is also the reason why it requires a <literal>dbOid</literal> instead "
+"of a name, as it has no way to process the catalog and look up names."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1785
+msgid "Deleting providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1787
+msgid "Providers can be deleted by using the functions:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1791
+#, no-wrap
+msgid ""
+"pg_tde_delete_database_key_provider(provider_name)\n"
+"pg_tde_delete_global_key_provider(provider_name)\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1795
+msgid ""
+"For database specific providers, the function first checks if the provider "
+"is used or not, and the provider is only deleted if it’s not used."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1800
+msgid ""
+"For global providers, the function checks if the provider is used anywhere, "
+"WAL or any specific database, and returns an error if it is."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1805
+msgid ""
+"This somewhat goes against the principle that <literal>pg_tde</literal> "
+"should not interact with other databases than the one the user is connected "
+"to, but on the other hand, it only does this lookup in the internal "
+"<literal>pg_tde</literal> metadata, not in postgres catalogs, so it is a "
+"gray zone. Making this check makes more sense than potentially making some "
+"databases inaccessible."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1815
+msgid "Listing/querying providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1817
+msgid "<literal>pg_tde</literal> provides 2 functions to show providers:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1823 doc/src/sgml/pg_tde_en.sgml:2927
+msgid "<literal>pg_tde_list_all_database_key_providers()</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1828 doc/src/sgml/pg_tde_en.sgml:2932
+msgid "<literal>pg_tde_list_all_global_key_providers()</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1833
+msgid "These functions return a list of provider names, type and configuration."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1838
+msgid "Provider permissions"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1840
+msgid ""
+"<literal>pg_tde</literal> implements access control based on execution "
+"rights on the administration functions."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1844
+msgid "For keys and providers administration, it provides two pair of functions:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1849
+#, no-wrap
+msgid "pg_tde_(grant/revoke)_database_key_management_to_role\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1853
+msgid "Creating and rotating keys"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1855
+msgid "Principal keys can be created or rotated using the following functions:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1860
+#, no-wrap
+msgid ""
+"pg_tde_set_key_using_(global/database)_key_provider('key-name', "
+"'provider-name', ensure_new_key)\n"
+"pg_tde_set_server_key_using_(global/database)_key_provider('key-name', "
+"'provider-name', ensure_new_key)\n"
+"pg_tde_set_default_key_using_(global/database)_key_provider('key-name', "
+"'provider-name', ensure_new_key)\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1865
+msgid ""
+"<literal>ensure_new_key</literal> is a boolean parameter defaulting to "
+"false. If it is <literal>true</literal> the function might return an error "
+"instead of setting the key if it already exists on the provider."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1872
+msgid "Default principal key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1874
+msgid ""
+"With <literal>pg_tde.inherit_global_key_providers</literal>, it is also "
+"possible to set up a default global principal key, which will be used by any "
+"database which has the <literal>pg_tde</literal> extension enabled, but "
+"doesn’t have a database specific principal key configured using "
+"<literal>pg_tde_set_key_using_(global/database)_key_provider</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1882
+msgid ""
+"With this feature, it is possible for the entire database server to easily "
+"use the same principal key for all databases, completely disabling "
+"multi-tenency."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1887
+msgid "A default key can be managed with the following function:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1891
+#, no-wrap
+msgid "pg_tde_set_default_key('key-name', 'provider-name', ensure_new_key)\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1894
+msgid ""
+"Changing the default principal key will rotate the encryption of internal "
+"keys for all databases using the current default principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1900
+msgid "Current key details"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1902
+msgid ""
+"<literal>pg_tde_key_info()</literal> returns the name of the current "
+"principal key, and the provider it uses."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1906
+msgid ""
+"<literal>pg_tde_server_key_info()</literal> does the same for the server "
+"key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1910
+msgid ""
+"<literal>pg_tde_default_key_info()</literal> does the same for the default "
+"key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1914
+msgid ""
+"<literal>pg_tde_verify_key()</literal> checks that the key provider is "
+"accessible, that the current principal key can be downloaded from it, and "
+"that it is the same as the current key stored in memory - if any of these "
+"fail, it reports an appropriate error."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1922
+msgid "Key permissions"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1924
+msgid ""
+"Users with management permissions to a specific database "
+"<literal>(pg_tde_(grant/revoke)_(global/databse)_key_management_to_role)</literal> "
+"can change the keys for the database, and use the current key "
+"functions. This includes creating keys using global providers, if "
+"<literal>pg_tde.inherit_global_providers</literal> is enabled."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1932
+msgid ""
+"Also the "
+"<literal>pg_tde_(grant/revoke)_database_key_management_to_role</literal> "
+"function deals with only the specific permission for the above function: it "
+"allows a user to change the key for the database, but not to modify the "
+"provider configuration."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1940
+msgid "Creating encrypted tables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1942
+msgid ""
+"To create an encrypted table or modify an existing table to be encrypted, "
+"simply use <literal>USING tde_heap</literal> in the "
+"<literal>CREATE</literal> statement."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1948
+msgid "Changing the <literal>pg_tde.inherit_global_keys</literal> setting"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1951
+msgid ""
+"It is possible for users to use <literal>pg_tde</literal> with "
+"<literal>inherit_global_keys = on</literal>, refer to global keys / keyrings "
+"in databases, and then change this setting to <literal>off</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:1957
+msgid ""
+"In this case existing references to global providers, or the global default "
+"principal key will remain working as before, but new references to the "
+"global scope can’t be made."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:1964
+msgid "Typical setup scenarios"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:1966
+msgid "Simple <quote>one principal key</quote> encryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:1972 doc/src/sgml/pg_tde_en.sgml:2023
+#, no-wrap
+msgid ""
+" shared_preload_libraries = 'pg_tde'\n"
+" pg_tde.wal_encrypt = on\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1970 doc/src/sgml/pg_tde_en.sgml:2021
+msgid ""
+"Update configuration file: load extension and enable WAL encryption.  "
+"<placeholder type=\"programlisting\" id=\"0\"/>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1979 doc/src/sgml/pg_tde_en.sgml:2030
+msgid "<literal>CREATE EXTENSION pg_tde;</literal> in <literal>template1</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1985 doc/src/sgml/pg_tde_en.sgml:2036
+msgid "Adding a global key provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1990
+msgid "Adding a default principal key using the same global provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:1996
+msgid "Changing the WAL encryption to use the default principal key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2002
+msgid ""
+"Optionally: setting the <literal>default_table_access_method</literal> to "
+"<literal>tde_heap</literal> so that tables are encrypted by default"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2010
+msgid ""
+"Database users don’t need permissions to any of the encryption functions: "
+"encryption is managed by the admins, normal users only have to create tables "
+"with encryption, which requires no specific permissions."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2017
+msgid "One key storage, but different keys per database"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2041
+msgid "Changing the WAL encryption to use the proper global key provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2047
+msgid ""
+"Giving users that are expected to manage database keys permissions for "
+"database specific key management, but not database specific key provider "
+"management: specific databases HAVE to use the global key provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:2056
+msgid ""
+"Setting the <literal>default_table_access_method</literal> to "
+"<literal>tde_heap</literal> is possible, but instead of <literal>ALTER "
+"SYSTEM</literal> only per database using <literal>ALTER DATABASE</literal>, "
+"after a principal key is configured for that specific database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:2064
+msgid ""
+"Alternatively <literal>ALTER SYSTEM</literal> is possible, but table "
+"creation in the database will fail if there’s no principal key for the "
+"database, that has to be created first."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:2073
+msgid "pg_tde CLI Tools"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:2075
+msgid ""
+"The <literal>pg_tde</literal> extension introduces new command-line "
+"utilities and extends some existing <productname>Tantor SE</productname> "
+"tools to support encrypted WAL and tables. These include:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2080
+msgid "pg_tde_change_key_provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2082
+msgid ""
+"A tool for modifying the configuration of a key provider, possibly also "
+"changing its type."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2086
+msgid ""
+"This tool edits the configuration files directly, ignoring permissions or "
+"running <literal>postgres</literal> processes."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2090
+msgid ""
+"Its only intended use is to fix servers that can’t start up because of "
+"inaccessible key providers."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2094
+msgid ""
+"For example, you restore from an old backup and the address of the key "
+"provider changed in the meantime. You can use this tool to correct the "
+"configuration, allowing the server to start up."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><warning><para>
+#: doc/src/sgml/pg_tde_en.sgml:2100
+msgid ""
+"Use this tool <emphasis role=\"strong\">only when the server is "
+"offline.</emphasis> To modify the key provider configuration when the server "
+"is up and running, use the <link "
+"linkend=\"pg_tde-change-an-existing-provider\"><literal>pg_tde_change_(global/database)_key_provider_&lt;type&gt;</literal></link> "
+"SQL functions."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2111
+msgid ""
+"To modify the key provider configuration, specify all parameters depending "
+"on the provider type in the same way as you do when using the <link "
+"linkend=\"pg_tde-change-an-existing-provider\"><literal>pg_tde_change_(global/database)_key_provider_&lt;type&gt;</literal></link> "
+"SQL functions."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2118
+msgid "The general syntax is as follows:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2122
+#, no-wrap
+msgid ""
+"pg_tde_change_key_provider [-D &lt;datadir&gt;] &lt;dbOid&gt; "
+"&lt;provider_name&gt; &lt;new_provider_type&gt; "
+"&lt;provider_parameters...&gt;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2130
+msgid ""
+"[optional] <literal>&lt;datadir&gt;</literal> is the data "
+"directory.<literal>pg_tde</literal> uses the <literal>$PGDATA</literal> "
+"environment variable if this is not specified"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2138
+msgid ""
+"<literal>&lt;provider_name&gt;</literal> is the name you assigned to the key "
+"provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2144
+msgid ""
+"<literal>&lt;new_provider_type&gt;</literal> can be a "
+"<literal>file</literal>, <literal>vault</literal> or <literal>kmip</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2151
+msgid "<literal>&lt;dbOid&gt;</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2156
+msgid "Depending on the provider type, the additional parameters are:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2160
+#, no-wrap
+msgid ""
+"pg_tde_change_key_provider [-D &lt;datadir&gt;] &lt;dbOid&gt; "
+"&lt;provider_name&gt; file &lt;filename&gt;\n"
+"pg_tde_change_key_provider [-D &lt;datadir&gt;] &lt;dbOid&gt; "
+"&lt;provider_name&gt; vault &lt;token_path&gt; &lt;url&gt; "
+"&lt;mount_path&gt; [&lt;ca_path&gt;]\n"
+"pg_tde_change_key_provider [-D &lt;datadir&gt;] &lt;dbOid&gt; "
+"&lt;provider_name&gt; kmip &lt;host&gt; &lt;port&gt; &lt;cert_path&gt; "
+"&lt;key_path&gt; [&lt;ca_path&gt;]\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2167
+msgid "pg_waldump"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2169
+msgid ""
+"<link linkend=\"pgwaldump\">pg_waldump</link> is a tool to display a "
+"human-readable rendering of the Write-Ahead Log (WAL) of a "
+"<productname>Tantor SE</productname> database cluster."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2175
+msgid ""
+"To read encrypted WAL records, <literal>pg_waldump</literal> supports the "
+"following additional arguments:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2181
+msgid ""
+"<literal>keyring_path</literal>: the directory where keyring configuration "
+"files for WAL are stored. These files include:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2187
+msgid "<literal>pg_tde.map</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2192
+msgid "<literal>pg_tde.dat</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2197
+msgid "<literal>pg_tde_keyrings</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:2205
+msgid ""
+"<literal>pg_waldump</literal> will not decrypt WAL unless the "
+"<literal>keyring_path</literal> is set."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:2211
+msgid "GUC Variables"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:2213
+msgid ""
+"The <literal>pg_tde</literal> extension provides GUC variables to configure "
+"the behaviour of the extension:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2217
+msgid "pg_tde.wal_encrypt"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><literallayout>
+#: doc/src/sgml/pg_tde_en.sgml:2218 doc/src/sgml/pg_tde_en.sgml:2250
+#, no-wrap
+msgid ""
+"<emphasis role=\"strong\">Type</emphasis> - boolean\n"
+"<emphasis role=\"strong\">Default</emphasis> - off"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2221
+msgid ""
+"A <literal>boolean</literal> variable that controls if WAL writes are "
+"encrypted or not."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2225
+msgid ""
+"Changing this variable requires a server restart, and can only be set at the "
+"server level."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2229
+msgid ""
+"WAL encryption is controlled globally. If enabled, all WAL writes are "
+"encrypted in the entire <productname>Tantor SE</productname> cluster."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2233
+msgid ""
+"This variable only controls new writes to the WAL, it doesn’t affect "
+"existing WAL records."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2237
+msgid ""
+"<literal>pg_tde</literal> is always capable of reading existing encrypted "
+"WAL records, as long as the keys used for the encryption are still "
+"available."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2242
+msgid ""
+"Enabling WAL encryption requires a configured global principal key. Refer to "
+"the <link linkend=\"pg_tde-configure-wal-encryption-tech-preview\">WAL "
+"encryption configuration</link> documentation for more information."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2249
+msgid "pg_tde.enforce_encryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2253
+msgid ""
+"A <literal>boolean</literal> variable that controls if the creation of new, "
+"not encrypted tables is allowed."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2257
+msgid ""
+"If enabled, <literal>CREATE TABLE</literal> statements will fail unless they "
+"use the <literal>tde_heap</literal> access method."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2261
+msgid ""
+"Similarly, <literal>ALTER TABLE &lt;x&gt; SET ACCESS METHOD</literal> is "
+"only allowed, if the access method is <literal>tde_heap</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2267
+msgid ""
+"Other DDL operations are still allowed. For example other "
+"<literal>ALTER</literal> commands are allowed on unencrypted tables, as long "
+"as the access method isn’t changed."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2272 doc/src/sgml/pg_tde_en.sgml:2317
+msgid "You can set this variable at the following levels:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2277 doc/src/sgml/pg_tde_en.sgml:2322
+msgid "global - for the entire <productname>Tantor SE</productname> cluster."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2282 doc/src/sgml/pg_tde_en.sgml:2327
+msgid "database - for specific databases."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2287 doc/src/sgml/pg_tde_en.sgml:2332
+msgid "user - for specific users."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2292 doc/src/sgml/pg_tde_en.sgml:2337
+msgid "session - for the current session."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2297
+msgid "Setting or changing the value requires superuser permissions."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2301
+msgid "pg_tde.inherit_global_providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><literallayout>
+#: doc/src/sgml/pg_tde_en.sgml:2302
+#, no-wrap
+msgid ""
+"<emphasis role=\"strong\">Type</emphasis> - boolean\n"
+"<emphasis role=\"strong\">Default</emphasis> - on"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2305
+msgid ""
+"A <literal>boolean</literal> variable that controls if databases can use "
+"global key providers for storing principal keys."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2309
+msgid ""
+"If disabled, functions that change the key providers can only work with "
+"database local key providers."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2313
+msgid "In this case, the default principal key, if set, is also disabled."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2342
+msgid ""
+"Setting this variable doesn’t affect existing uses of global keys. It only "
+"prevents the creation of new principal keys using global providers."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2348
+msgid "pg_tde.default_cipher_algorithm"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><literallayout>
+#: doc/src/sgml/pg_tde_en.sgml:2349
+#, no-wrap
+msgid ""
+"<emphasis role=\"strong\">Type</emphasis> - string\n"
+"<emphasis role=\"strong\">Default</emphasis> - 'aes'"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2352
+msgid ""
+"A <literal>string</literal> variable that specifies which encryption "
+"algorithm is used by default."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2356
+msgid ""
+"It is used when encryptor storage parameter is not used during "
+"<command>CREATE TABLE</command> command."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2360
+msgid ""
+"Another use case is changing encryption algorithm for already encrypted "
+"table. Set this setting to preferred algorithm and execute <command>ALTER "
+"TABLE ... SET ACCESS METHOD tde_heap</command>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2365
+msgid "You can set this setting to the value of any supported algorithm:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2370
+msgid "<literal>aes</literal> - AES-CBC 256-bit."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2375
+msgid "<literal>chacha20</literal> - ChaCha20."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2380
+msgid "<literal>magma</literal> - GOST 28147-89 Magma."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2385
+msgid "<literal>kuznyechik</literal> - GOST R 34.12-2015 Kuznyechik."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2390
+msgid ""
+"This parameter is local to user and can be changed without admin priviledges "
+"or restarting database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2395
+msgid "pg_tde.preinit_algs"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><literallayout>
+#: doc/src/sgml/pg_tde_en.sgml:2396
+#, no-wrap
+msgid ""
+"<emphasis role=\"strong\">Type</emphasis> - string\n"
+"<emphasis role=\"strong\">Default</emphasis> - 'aes,chacha20'"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2399
+msgid ""
+"A <literal>string</literal> variable that stores a list of algorithm names "
+"separated by comma. These algorithms are loaded and initialized at the "
+"server startup."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2404
+msgid ""
+"If some algorithm is not avaiable, then <literal>ERROR</literal> is thrown "
+"and server will not start."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2408
+msgid "This serves 2 purposes:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2413
+msgid ""
+"Increase performance by elimination of neccessity for each backend to load "
+"and initialize algorithms themselves."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2419
+msgid "Make sure, that desired algorithms are available for use."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2424
+msgid ""
+"Best practice is to set this setting at start and do not use other "
+"algorithms. Otherwise, if desired algorithm is not supported you will have "
+"to update OpenSSL configuration and restart server.  By using this setting "
+"you can be sure that algorithm is avaiable for future use."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2432
+msgid "pg_tde.openssl_config"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><literallayout>
+#: doc/src/sgml/pg_tde_en.sgml:2433
+#, no-wrap
+msgid ""
+"<emphasis role=\"strong\">Type</emphasis> - string\n"
+"<emphasis role=\"strong\">Default</emphasis> - NULL"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2436
+msgid ""
+"A <literal>string</literal> variable that stores a path to OpenSSL "
+"configuration file that used for OpenSSL initialization."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2440
+msgid ""
+"If no path is set, then default configuration file is used.  On most "
+"Debian-based systems it is <literal>/etc/ssl/openssl.cnf</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2444
+msgid ""
+"Using this option you can set custom OpenSSL configuration and do not "
+"interfere with system-wide configuration file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:2450
+msgid "Functions"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:2452
+msgid ""
+"The <literal>pg_tde</literal> extension provides functions for managing "
+"different aspects of its operation:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2456
+msgid "Permission management"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2458
+msgid ""
+"By default, <literal>pg_tde</literal> is restrictive. It doesn’t allow any "
+"operations until permissions are granted to the user.  Only superusers can "
+"create or modify to key providers or modify objects in the global "
+"scope. Functions for viewing keys and for setting the principal key in a "
+"database local key provider can on the other hand be run by the database "
+"owner and be delegated to normal users using the <literal>GRANT "
+"EXECUTE</literal> and <literal>REVOKE EXECUTE</literal> commands."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2468
+msgid ""
+"The following functions are also provided for easier management of "
+"functionality groups:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2472
+msgid "Database local key management"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2474
+msgid ""
+"Use these functions to grant or revoke permissions to manage the key of the "
+"current database. They enable or disable all functions related to the key of "
+"the current database:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2481
+msgid "<literal>pg_tde_grant_database_key_management_to_role(role)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2486
+msgid "<literal>pg_tde_revoke_database_key_management_from_role(role)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2492
+msgid "Global scope key management"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2494
+msgid "Managment of the global scope is restricted to superusers only."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2499
+msgid "Inspections"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2501
+msgid ""
+"Use these functions to grant or revoke the use of query functions, which do "
+"not modify the encryption settings:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2507
+msgid "<literal>pg_tde_grant_key_viewer_to_role(role)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2512
+msgid "<literal>pg_tde_revoke_key_viewer_from_role(role)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2521
+msgid ""
+"A key provider is a system or service responsible for managing encryption "
+"keys. <literal>pg_tde</literal> supports the following key providers:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2528
+msgid "local file (not for production use)"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2533
+msgid "Hashicorp Vault / OpenBao"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2538
+msgid "KMIP compatible providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2543
+msgid "Key provider management includes the following operations:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2548
+msgid "creating a new key provider,"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2553
+msgid "changing an existing key provider,"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2558
+msgid "deleting a key provider,"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2563
+msgid "listing key providers."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2568
+msgid "Add a provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2570
+msgid ""
+"You can add a new key provider using the provided functions, which are "
+"implemented for each provider type."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2574
+msgid ""
+"There are two functions to add a key provider: one function adds it for the "
+"current database and another one - for the global scope."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2581
+msgid ""
+"<literal>pg_tde_add_database_key_provider_&lt;type&gt;('provider-name', "
+"&lt;provider specific parameters&gt;)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2586
+msgid ""
+"<literal>pg_tde_add_global_key_provider_&lt;type&gt;('provider-name', "
+"&lt;provider specific parameters&gt;)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2591
+msgid ""
+"When you add a new provider, the provider name must be unqiue in the "
+"scope. But a local database provider and a global provider can have the same "
+"name."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2597
+msgid "Change an existing provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2599
+msgid ""
+"You can change an existing key provider using the provided functions, which "
+"are implemented for each provider type."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2603
+msgid ""
+"There are two functions to change existing providers: one to change a "
+"provider in the current database, and another one to change a provider in "
+"the global scope."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2610
+msgid ""
+"<literal>pg_tde_change_database_key_provider_&lt;type&gt;('provider-name', "
+"&lt;provider specific parameters&gt;)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2615
+msgid ""
+"<literal>pg_tde_change_global_key_provider_&lt;type&gt;('provider-name', "
+"&lt;provider specific parameters&gt;)</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2620
+msgid ""
+"When you change a provider, the referred name must exist in the database "
+"local or a global scope."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2624
+msgid ""
+"The <literal>change</literal> functions require the same parameters as the "
+"<literal>add</literal> functions. They overwrite the setting for every "
+"parameter except for the name, which can’t be changed."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2630
+msgid ""
+"Provider specific parameters differ for each implementation.  Refer to the "
+"respective subsection for details."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2634
+msgid ""
+"<emphasis role=\"strong\">Some provider specific parameters contain "
+"sensitive information, such as passwords. Never specify these directly, use "
+"the remote configuration option instead.</emphasis>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><title>
+#: doc/src/sgml/pg_tde_en.sgml:2640
+msgid "Adding or modifying Vault providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><para>
+#: doc/src/sgml/pg_tde_en.sgml:2642
+msgid ""
+"The Vault provider connects to a HashiCorp Vault or an OpenBao server, and "
+"stores the keys on a key-value store version 2."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><para>
+#: doc/src/sgml/pg_tde_en.sgml:2647
+msgid "Use the following functions to add the Vault provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2651
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_database_key_provider_vault_v2(\n"
+"  'provider-name',\n"
+"  'secret_token_path',\n"
+"  'url','mount',\n"
+"  'ca_path'\n"
+");\n"
+"\n"
+"SELECT pg_tde_add_global_key_provider_vault_v2(\n"
+"  'provider-name',\n"
+"  'secret_token_path',\n"
+"  'url','mount',\n"
+"  'ca_path'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><para>
+#: doc/src/sgml/pg_tde_en.sgml:2666
+msgid "These functions change the Vault provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2670
+#, no-wrap
+msgid ""
+"SELECT pg_tde_change_database_key_provider_vault_v2(\n"
+"  'provider-name',\n"
+"  'secret_token_path',\n"
+"  'url',\n"
+"  'mount',\n"
+"  'ca_path'\n"
+");\n"
+"\n"
+"SELECT pg_tde_change_global_key_provider_vault_v2(\n"
+"  'provider-name',\n"
+"  'secret_token_path',\n"
+"  'url',\n"
+"  'mount',\n"
+"  'ca_path'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2692
+msgid "<literal>provider-name</literal> is the name of the key provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2703
+msgid ""
+"<literal>mount</literal> is the mount point on the Vault server where the "
+"key provider should store the keys"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2715
+msgid ""
+"<emphasis role=\"strong\">[optional]</emphasis> <literal>ca_path</literal> "
+"is the path of the CA file used for SSL verification"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><title>
+#: doc/src/sgml/pg_tde_en.sgml:2723
+msgid "Adding or modifying KMIP providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><para>
+#: doc/src/sgml/pg_tde_en.sgml:2725
+msgid "The KMIP provider uses a remote KMIP server."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><para>
+#: doc/src/sgml/pg_tde_en.sgml:2728
+msgid "Use these functions to add a KMIP provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2732
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_database_key_provider_kmip(\n"
+"  'provider-name',\n"
+"  'kmip-addr',\n"
+"  'port',\n"
+"  '/path_to/server_certificate.pem',\n"
+"  '/path_to/client_cert.pem',\n"
+"  '/path_to/client_key.pem'\n"
+");\n"
+"SELECT pg_tde_add_global_key_provider_kmip(\n"
+"  'provider-name',\n"
+"  'kmip-addr',\n"
+"  'port',\n"
+"  '/path_to/server_certificate.pem',\n"
+"  '/path_to/client_certificate.pem',\n"
+"  '/path_to/client_key.pem'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><para>
+#: doc/src/sgml/pg_tde_en.sgml:2750
+msgid "These functions change the KMIP provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2754
+#, no-wrap
+msgid ""
+"SELECT pg_tde_change_database_key_provider_kmip(\n"
+"  'provider-name',\n"
+"  'kmip-addr',\n"
+"  'port',\n"
+"  '/path_to/server_certificate.pem',\n"
+"  '/path_to/client_cert.pem',\n"
+"  '/path_to/client_key.pem'\n"
+");\n"
+"SELECT pg_tde_change_global_key_provider_kmip(\n"
+"  'provider-name',\n"
+"  'kmip-addr',\n"
+"  'port',\n"
+"  '/path_to/server_certificate.pem',\n"
+"  '/path_to/client_certificate.pem',\n"
+"  '/path_to/client_key.pem'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2777
+msgid "<literal>provider-name</literal> is the name of the provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2783
+msgid ""
+"<literal>kmip-addr</literal> is the IP address or domain name of the KMIP "
+"server"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2789
+msgid ""
+"<literal>port</literal> is the port to communicate with the KMIP "
+"server. Most KMIP servers use port 5696."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2801
+msgid "<literal>client-certificate</literal> is the path to the client certificate."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><sect5><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:2814
+msgid ""
+"The specified access parameters require permission to read and write keys at "
+"the server."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2821
+msgid "Adding or modifying local keyfile providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2823
+msgid "This provider manages database keys using a local keyfile."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2826
+msgid ""
+"This function is intended for development or quick testing, and stores the "
+"keys unencrypted in the specified data file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><caution><para>
+#: doc/src/sgml/pg_tde_en.sgml:2831
+msgid ""
+"Local keyfile providers are <emphasis role=\"strong\">not "
+"recommended</emphasis> for production environments, they lack the security "
+"and manageability of external key management systems."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2838
+msgid "Add a local keyfile provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2842
+#, no-wrap
+msgid ""
+"SELECT pg_tde_add_database_key_provider_file(\n"
+"  'provider-name',\n"
+"  '/path/to/the/key/provider/data.file'\n"
+");\n"
+"\n"
+"SELECT pg_tde_add_global_key_provider_file(\n"
+"  'provider-name',\n"
+"  '/path/to/the/key/provider/data.file'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2853
+msgid "Change a local keyfile provider:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2857
+#, no-wrap
+msgid ""
+"SELECT pg_tde_change_database_key_provider_file(\n"
+"  'provider-name',\n"
+"  '/path/to/the/key/provider/data.file'\n"
+");\n"
+"\n"
+"SELECT pg_tde_change_global_key_provider_file(\n"
+"  'provider-name',\n"
+"  '/path/to/the/key/provider/data.file'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2880
+msgid ""
+"<literal>/path/to/the/key/provider/data.file</literal> is the path to the "
+"key provider file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2887
+msgid "Delete a provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2889
+msgid ""
+"These functions delete an existing provider in the current database or in "
+"the global scope:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2895
+msgid "<literal>pg_tde_delete_database_key_provider('provider-name')</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2900
+msgid "<literal>pg_tde_delete_global_key_provider('provider-name')</literal>"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2905
+msgid ""
+"You can only delete key providers that are not currently in use. An error is "
+"returned if the current principal key is using the provider you are trying "
+"to delete."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2910
+msgid ""
+"If the use of global key providers is enabled via the "
+"<literal>pg_tde.inherit_global</literal> GUC, you can delete a global key "
+"provider only if it isn’t used anywhere, including any databases. If it is "
+"used in any database, an error is returned instead."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2918
+msgid "List key providers"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2920
+msgid ""
+"These functions list the details of all key providers for the current "
+"database or for the global scope, including all configuration values:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><caution><para>
+#: doc/src/sgml/pg_tde_en.sgml:2938
+msgid ""
+"All configuration values include possibly sensitive values, such as "
+"passwords.  <emphasis role=\"strong\">Never</emphasis> specify these "
+"directly, use the remote configuration option instead."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:2947
+msgid "Principal key management"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2949
+msgid ""
+"Use these functions to create a new principal key for a specific scope such "
+"as a current database, a global or default scope. You can also use them to "
+"start using a different existing key for a specific scope."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:2955
+msgid ""
+"Princial keys are stored on key providers by the name specified in this "
+"function - for example, when using the Vault provider, after creating a key "
+"named <quote>foo</quote>, a key named <quote>foo</quote> will be visible on "
+"the Vault server at the specified mount point."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2961
+msgid "pg_tde_set_key_using_database_key_provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2963
+msgid ""
+"Creates or rotates the principal key for the current database using the "
+"specified database key provider and key name."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:2968
+#, no-wrap
+msgid ""
+"SELECT pg_tde_set_key_using_database_key_provider(\n"
+"  'name-of-the-key',\n"
+"  'provider-name',\n"
+"  'ensure_new_key'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2975 doc/src/sgml/pg_tde_en.sgml:3010
+#: doc/src/sgml/pg_tde_en.sgml:3045 doc/src/sgml/pg_tde_en.sgml:3084
+msgid ""
+"The <literal>ensure_new_key</literal> parameter instructs the function how "
+"to handle a principal key during key rotation:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2981
+msgid ""
+"If set to <literal>true</literal> (default), a new key must be unique. If "
+"the provider already stores a key by that name, the function returns an "
+"error."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:2988
+msgid "If set to <literal>false</literal>, an existing principal key may be reused."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:2995
+msgid "pg_tde_set_key_using_global_key_provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:2997
+msgid ""
+"Creates or rotates the global principal key using the specified global key "
+"provider and the key name. This key is used for global settings like WAL "
+"encryption."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3003
+#, no-wrap
+msgid ""
+"SELECT pg_tde_set_key_using_global_key_provider(\n"
+"  'name-of-the-key',\n"
+"  'provider-name',\n"
+"  'ensure_new_key'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3016 doc/src/sgml/pg_tde_en.sgml:3051
+#: doc/src/sgml/pg_tde_en.sgml:3090
+msgid ""
+"If set to <literal>true</literal>, a new key must be unique. If the provider "
+"already stores a key by that name, the function returns an error."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3023 doc/src/sgml/pg_tde_en.sgml:3058
+#: doc/src/sgml/pg_tde_en.sgml:3097
+msgid ""
+"If set to <literal>false</literal> (default), an existing principal key may "
+"be reused."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3030
+msgid "pg_tde_set_server_key_using_global_key_provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3032
+msgid ""
+"Creates or rotates the server principal key using the specified global key "
+"provider. Use this function to set a principal key for WAL encryption."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3038
+#, no-wrap
+msgid ""
+"SELECT pg_tde_set_server_key_using_global_key_provider(\n"
+"  'name-of-the-key',\n"
+"  'provider-name',\n"
+"  'ensure_new_key'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3065
+msgid "pg_tde_set_default_key_using_global_key_provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3067
+msgid ""
+"Creates or rotates the default principal key for the server using the "
+"specified global key provider."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3071
+msgid ""
+"The default key is automatically used as a principal key by any database "
+"that doesn’t have an individual key provider and key configuration."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3077
+#, no-wrap
+msgid ""
+"SELECT pg_tde_set_default_key_using_global_key_provider(\n"
+"  'name-of-the-key',\n"
+"  'provider-name',\n"
+"  'ensure_new_key'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3105
+msgid "Encryption status check"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3107
+msgid "pg_tde_is_encrypted"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3109
+msgid ""
+"Tells if a relation is encrypted using the <literal>pg_tde</literal> "
+"extension or not. Returns <literal>NULL</literal> if a relation lacks "
+"storage like views, foreign tables, and partitioned tables and indexes."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3115
+msgid "To verify that a table is encrypted, run the following statement:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3120
+#, no-wrap
+msgid ""
+"SELECT pg_tde_is_encrypted(\n"
+"  'table_name'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3125
+msgid ""
+"You can also verify if the table in a custom schema is encrypted. Pass the "
+"schema name for the function as follows:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3130
+#, no-wrap
+msgid ""
+"SELECT pg_tde_is_encrypted(\n"
+"  'schema.table_name'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3135
+msgid ""
+"This can additionally be used to verify that indexes and sequences are "
+"encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3140
+msgid "pg_tde_get_algorithm"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3142
+msgid ""
+"Tells which algorithm is used for relation encryption. Returns "
+"<literal>NULL</literal> if a relation is not encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3146
+msgid "To get encryption algorithm for table in current schema just run:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3150
+#, no-wrap
+msgid ""
+"SELECT pg_tde_get_algorithm(\n"
+"  'table_name'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3155
+msgid "This also works for relations in custom schema:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3159
+#, no-wrap
+msgid ""
+"SELECT pg_tde_get_algorithm(\n"
+"  'schema.table_name'\n"
+");\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3164
+msgid ""
+"Note that encryption algorithm for indexes and TOASTs is equal to encryption "
+"algorithm that is used for parent relation."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3170
+msgid "pg_tde_key_info"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3172
+msgid ""
+"Displays information about the principal key for the current database, if it "
+"exists."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3177
+#, no-wrap
+msgid "SELECT pg_tde_key_info();\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3181
+msgid "pg_tde_server_key_info"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3183
+msgid ""
+"Displays information about the principal key for the server scope, if "
+"exists."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3188
+#, no-wrap
+msgid "SELECT pg_tde_server_key_info();\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3192
+msgid "pg_tde_default_key_info"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3194
+msgid "Displays the information about the default principal key, if it exists."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3199
+#, no-wrap
+msgid "SELECT pg_tde_default_key_info();\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3203
+msgid "pg_tde_verify_key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3205
+msgid ""
+"This function checks that the current database has a properly functional "
+"encryption setup, which means:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3211 doc/src/sgml/pg_tde_en.sgml:3256
+#: doc/src/sgml/pg_tde_en.sgml:3301
+msgid "A key provider is configured"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3216 doc/src/sgml/pg_tde_en.sgml:3261
+#: doc/src/sgml/pg_tde_en.sgml:3306
+msgid "The key provider is accessible using the specified configuration"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3222
+msgid "There is a principal key for the database"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3227 doc/src/sgml/pg_tde_en.sgml:3272
+#: doc/src/sgml/pg_tde_en.sgml:3317
+msgid "The principal key can be retrieved from the remote key provider"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3233 doc/src/sgml/pg_tde_en.sgml:3278
+#: doc/src/sgml/pg_tde_en.sgml:3323
+msgid ""
+"The principal key returned from the key provider is the same as cached in "
+"the server memory"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3239 doc/src/sgml/pg_tde_en.sgml:3284
+#: doc/src/sgml/pg_tde_en.sgml:3329
+msgid "If any of the above checks fail, the function reports an error."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3244
+#, no-wrap
+msgid "SELECT pg_tde_verify_key();\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3248
+msgid "pg_tde_verify_server_key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3250
+msgid ""
+"This function checks that the server scope has a properly functional "
+"encryption setup, which means:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3267
+msgid "There is a principal key for the global scope"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3289
+#, no-wrap
+msgid "SELECT pg_tde_verify_server_key();\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3293
+msgid "pg_tde_verify_default_key"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3295
+msgid ""
+"This function checks that the default key is properly configured, which "
+"means:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3312
+msgid "There is a principal key that can be used for any scope"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3334
+#, no-wrap
+msgid "SELECT pg_tde_verify_default_key();\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:3340
+msgid "How to"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3342
+msgid "Remove Encryption from an Encrypted Table"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3344
+msgid "Method 1. Change the access method"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3346
+msgid ""
+"If you encrypted a table with the <literal>tde_heap</literal> access method "
+"and need to remove the encryption from it, run the following command against "
+"the desired table (<literal>mytable</literal> in the example below):"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3353
+#, no-wrap
+msgid "ALTER TABLE mytable SET ACCESS METHOD heap;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3356
+msgid ""
+"Note that the <literal>SET ACCESS METHOD</literal> command drops hint bits "
+"and this may affect performance. Running a plain <literal>SELECT "
+"count(*)</literal> or <literal>VACUUM</literal> command on the entire table "
+"will check every tuple for visibility and set its hint bits.  Therefore, "
+"after executing the <literal>ALTER TABLE</literal> command, run a simple "
+"<literal>count(*)</literal> on your tables:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3367
+#, no-wrap
+msgid "SELECT count(*) FROM mytable;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3370
+msgid "Check that the table is not encrypted:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3374
+#, no-wrap
+msgid "SELECT pg_tde_is_encrypted('mytable');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3377
+msgid ""
+"The output returns <literal>f</literal> meaning that the table is no longer "
+"encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3381
+msgid ""
+"This also can be implemented using <literal>pg_tde_get_algorithm</literal> "
+"function. Non-<literal>NULL</literal> output means that table is encrypted:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3386
+#, no-wrap
+msgid "SELECT pg_tde_get_algorithm('mytable');\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3390
+msgid "Method 2. Create a new not encrypted table on the base of the encrypted one"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3393
+msgid ""
+"Alternatively, you can create a new not encrypted table with the same "
+"structure and data as the initial table. For example, the original encrypted "
+"table is <literal>EncryptedCustomers</literal>. Use the following command to "
+"create a new table <literal>Customers</literal>:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3401
+#, no-wrap
+msgid ""
+"CREATE TABLE Customers AS\n"
+"SELECT * FROM EncryptedCustomers;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3405
+msgid ""
+"The new table <literal>Customers</literal> inherits the structure and the "
+"data from <literal>EncryptedCustomers</literal>."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3410
+msgid ""
+"(Optional) If you no longer need the <literal>EncryptedCustomers</literal> "
+"table, you can delete it."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3416
+#, no-wrap
+msgid "DROP TABLE EncryptedCustomers;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:3422
+msgid "FAQ"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3424
+msgid "Why do I need TDE?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3426
+msgid "Using TDE provides the following benefits:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3431
+msgid ""
+"Compliance to security and legal regulations like General Data Protection "
+"Regulation (GDPR), Payment Card Industry Data Security Standard (PCI DSS), "
+"Federal Law No. 420-FZ of 30.11.2024 and others."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3439
+msgid ""
+"Encryption of backups. Even when an authorized person gets physical access "
+"to a backup, encryption ensures that the data remains unreadable and secure."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3446
+msgid ""
+"Granular encryption of specific data sets and reducing the performance "
+"overhead that encryption brings."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3452
+msgid "Additional layer of security to existing security measures"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3458
+msgid "When and how should I use TDE?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3460
+msgid ""
+"If you are dealing with Personally Identifiable Information (PII), data "
+"encryption is crucial. Especially if you are involved in areas with strict "
+"regulations like:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3467
+msgid "financial services where TDE helps to comply with PCI DSS"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3472
+msgid "healthcare and insurance - compliance with HIPAA, HITECH, CCPA"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3478
+msgid "telecommunications, government and education to ensure data confidentiality."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3484
+msgid "Using TDE helps you avoid the following risks:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3489
+msgid "Data breaches"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3494
+msgid "Identity theft that may lead to financial fraud and other crimes"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3500
+msgid "Reputation damage leading to loss of customer trust and business"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3506
+msgid ""
+"Legal consequences and financial losses for non-compliance with data "
+"protection regulations"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3512
+msgid "Internal threats by misusing unencrypted sensitive data"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3517
+msgid ""
+"If to translate sensitive data to files stored in your database, these are "
+"user data in tables, temporary files, WAL files. TDE has you covered "
+"encrypting all these files."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3522
+msgid ""
+"<literal>pg_tde</literal> does not encrypt system catalogs and temporary "
+"files.  This means that statistics data and database metadata are not "
+"encrypted."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3527
+msgid "I use disk-level encryption. Why should I care about TDE?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3530
+msgid ""
+"Encrypting a hard drive encrypts all data, including system, application, "
+"and temporary files."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3534
+msgid ""
+"Full disk encryption protects your data from people who have physical access "
+"to your device and even if it is lost or stolen.  However, it doesn’t "
+"protect the data after system boot-up: the data is automatically decrypted "
+"when the system runs or when an authorized user requests it."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3541
+msgid ""
+"Another point to consider is PCI DSS compliance for Personal Account Numbers "
+"(PAN) encryption."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3547
+msgid ""
+"<emphasis role=\"strong\">PCI DSS 3.4.1</emphasis> standards might consider "
+"disk encryption sufficient for compliance if you meet these requirements:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3554
+msgid "Separate the logical data access from the operating system authentication."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3560
+msgid "Ensure the decryption key is not linked to user accounts."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3566
+msgid ""
+"Note that PCI DSS 3.4.1 is retiring on March 31, 2025.  Therefore, consider "
+"switching to PCI DSS 4.0."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3572
+msgid ""
+"<emphasis role=\"strong\">PCI DSS 4.0</emphasis> standards consider using "
+"only disk and partition-level encryption not enough to ensure PAN "
+"protection. It requires an additional layer of security that "
+"<literal>pg_tde</literal> can provide."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3581
+msgid ""
+"<literal>pg_tde</literal> focuses specifically on data files and offers more "
+"granular control over encrypted data. The data remains encrypted on disk "
+"during runtime and when you move it to another directory, another system or "
+"storage. An example of such data is backups. They remain encrypted when "
+"moved to the backup storage."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3589
+msgid ""
+"Thus, to protect your sensitive data, consider using TDE to encrypt it at "
+"the table level. Then use disk-level encryption to encrypt a specific volume "
+"where this data is stored, or the entire disk."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3596
+msgid "Is TDE enough to ensure data security?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3598
+msgid ""
+"<emphasis role=\"strong\">No.</emphasis> Transparent Data Encryption (TDE) "
+"adds an extra layer of security for data at rest. You should also consider "
+"implementing the following additional security features:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3606
+msgid "Access control and authentication"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3611
+msgid "Strong network security like TLS"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3616
+msgid "Disk encryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3621
+msgid "Regular monitoring and auditing"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3626
+msgid ""
+"Additional data protection for sensitive fields (e.g., application-layer "
+"encryption)"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3633
+msgid "How does <literal>pg_tde</literal> make my data safe?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3636
+msgid "<literal>pg_tde</literal> uses two keys to encrypt data:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3641
+msgid ""
+"Internal encryption keys to encrypt the data. These keys are stored "
+"internally in an encrypted format, in a single "
+"<literal>$PGDATA/pg_tde</literal> directory."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3648
+msgid ""
+"Principal keys to encrypt internal encryption keys. These keys are stored "
+"externally, in the Key Management System (KMS)."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3655
+msgid "You can use the following KMSs:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3660
+msgid ""
+"<ulink "
+"url=\"https://developer.hashicorp.com/vault/docs/what-is-vault\">HashiCorp "
+"Vault</ulink>. <literal>pg_tde</literal> supports the KV secrets engine v2 "
+"of Vault."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3673
+msgid ""
+"KMIP-compatible server. KMIP is a standardized protocol for handling "
+"cryptographic workloads and secrets management"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3679
+msgid ""
+"HashiCorp Vault can also act as the KMIP server, managing cryptographic keys "
+"for clients that use the KMIP protocol."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3683
+msgid "Let’s break the encryption into two parts:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><title>
+#: doc/src/sgml/pg_tde_en.sgml:3686
+msgid "Encryption of data files"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3688
+msgid ""
+"Data files are encrypted with internal keys. Each file that relates to "
+"encrypted table has it's own internal key. For example, a table with 4 "
+"indexes will have 5 internal keys - one for the table and one for each "
+"index."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3694
+msgid ""
+"The initial decision on what file to encrypt is based on the table access "
+"method in <productname>Tantor SE</productname>. When you run a "
+"<literal>CREATE</literal> or <literal>ALTER TABLE</literal> statement with "
+"the <literal>USING tde_heap</literal> clause, the newly created data files "
+"are marked as encrypted, and then file operations encrypt or decrypt the "
+"data. Later, if an initial file is re-created as a result of a "
+"<literal>TRUNCATE</literal> or <literal>VACUUM FULL</literal> command, the "
+"newly created file inherits the encryption information and is either "
+"encrypted (i.e. for <literal>TRUNCATE</literal>)  or not "
+"(i.e. <literal>ALTER TABLE SET ACCESS METHOD heap</literal>)."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3707
+msgid ""
+"The principal key is used to encrypt the internal keys. It is stored in the "
+"key management store. When you query the table, the principal key is "
+"retrieved from the key store to decrypt the table. Then the internal key for "
+"that table is used to decrypt the data."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3713
+msgid ""
+"Principal key is retrieved from key management store only once, when it "
+"first needed, then it is cached in memory."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3720
+msgid ""
+"WAL encryption is done globally for the entire database cluster. All "
+"modifications to any database within a <productname>Tantor SE</productname> "
+"cluster are written to the same WAL to maintain data consistency and "
+"integrity and ensure that <productname>Tantor SE</productname> cluster can "
+"be restored to a consistent state. Therefore, WAL is encrypted globally."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3728
+msgid ""
+"When you turn on WAL encryption, <literal>pg_tde</literal> encrypts entire "
+"WAL files starting from the first WAL write after the server was started "
+"with the encryption turned on."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3733
+msgid ""
+"The same 2-key approach is used with WAL as with the table data: WAL pages "
+"are first encrypted with the internal key.  Then the internal key is "
+"encrypted with the global principal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3739
+msgid ""
+"You can turn WAL encryption on and off so WAL can contain both encrypted and "
+"unencrypted data. The WAL encryption GUC variable influences only writes."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><sect4><para>
+#: doc/src/sgml/pg_tde_en.sgml:3744
+msgid ""
+"Whenever the WAL is being read (by the recovery process or tools), the "
+"decision on what should be decrypted is based solely on the metadata of WAL "
+"encryption keys."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3751
+msgid "Should I encrypt all my data?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3753
+msgid ""
+"It depends on your business requirements and the sensitivity of your "
+"data. Encrypting all data is a good practice but it can have a performance "
+"impact."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3758
+msgid ""
+"Consider encrypting only tables that store sensitive data. You can decide "
+"what tables to encrypt and with what key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3762
+msgid ""
+"We advise encrypting the whole database only if all your data is sensitive, "
+"like PII, or if there is no other way to comply with data safety "
+"requirements."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3768
+msgid "What cipher mechanisms are used by <literal>pg_tde</literal>?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3771
+msgid ""
+"<literal>pg_tde</literal> can use 4 different encryption algorithms: "
+"AES-CBC-256, ChaCha20, Magma and Kuznyechik. First the internal keys in the "
+"datafile are encrypted using the principal key with AES-CBC-256, then the "
+"file data itself is again encrypted using one of above algorithms with the "
+"internal key."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3778
+msgid "For WAL encryption, AES-CTR-256 is used."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde_en.sgml:3782
+msgid ""
+"OpenSSL is used for encryption/decryption, so the availability of algorithm "
+"support in database depends on its support in OpenSSL itself."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3789
+msgid "Is post-quantum encryption supported?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3791
+msgid ""
+"No, it’s not yet supported. In our implementation we reply on OpenSSL "
+"libraries that don’t yet support post-quantum encryption. But all used "
+"encryption algorithms works only with 256-bit keys, so this allows to "
+"achieve sufficient level of security."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3799
+msgid "Can I encrypt an existing table?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3801
+msgid ""
+"Yes, you can encrypt an existing table. Run the <literal>ALTER "
+"TABLE</literal> command as follows:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3809
+msgid ""
+"Since the <literal>SET ACCESS METHOD</literal> command drops hint bits and "
+"this may affect the performance, we recommend to run the <literal>SELECT "
+"count(*)</literal> command. It checks every tuple for visibility and sets "
+"its hint bits. Read more in the <link "
+"linkend=\"validate-encryption-with-pg_tde\">Changing existing table</link> "
+"section."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3817
+msgid ""
+"Note that <command>ALTER TABLE SET ACCESS METHOD</command> do not allow "
+"setting storage parameters in <literal>WITH</literal> clause, then you might "
+"want to change <xref linkend=\"pg_tde.default_cipher_algorithm\"/> for "
+"custom encryption algorithm."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3824
+msgid "Do I have to restart the database to encrypt the data?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3827
+msgid "You must restart the database in the following cases to apply the changes:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3833
+msgid "after you enabled the <literal>pg_tde</literal> extension"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3838
+msgid "to turn on / off the WAL encryption"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><itemizedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3841
+msgid ""
+"to let the database make use of new algorithms in OpenSSL after you have "
+"made changes in it"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3847
+msgid ""
+"After that, no database restart is required. When you create or alter the "
+"table using the <literal>tde_heap</literal> access method, the files are "
+"marked as those that require encryption."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3853
+msgid "What happens to my data if I lose a principal key?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3855
+msgid ""
+"If you lose encryption keys, especially, the principal key, the data is "
+"lost. That’s why it’s critical to back up your encryption keys securely and "
+"use the Key Management service for key management."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde_en.sgml:3862
+msgid "Are my backups safe? Can I restore from them?"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3864
+msgid ""
+"<literal>pg_tde</literal> encrypts data at rest. This means that data is "
+"stored on disk in an encrypted form. During a backup, already encrypted data "
+"files are copied from disk onto the storage. This ensures the data safety in "
+"backups."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3870
+msgid ""
+"Since the encryption happens on the database level, it makes no difference "
+"for your tools and applications. They work with the data in the same way."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde_en.sgml:3875
+msgid ""
+"To restore from an encrypted backup, you must have the same principal "
+"encryption key, which was used to encrypt files in your backup. So try to "
+"hold them as long as possible in order to be able to recover from the worst "
+"case scenario when your backup is too old."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde_en.sgml:3884
+msgid "Uninstall pg_tde"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:3886
+msgid ""
+"If you no longer wish to use TDE in your deployment, you can remove the "
+"<literal>pg_tde</literal> extension. To do so, your user must have the "
+"superuser privileges, or a database owner privileges in case you only want "
+"to remove it from a single database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><para>
+#: doc/src/sgml/pg_tde_en.sgml:3893
+msgid "Here’s how to do it:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3898
+msgid "Drop the extension using the <literal>DROP EXTENSION</literal> command:"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><programlisting>
+#: doc/src/sgml/pg_tde_en.sgml:3903
+#, no-wrap
+msgid "DROP EXTENSION pg_tde;\n"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3906
+msgid "This command will fail if there are still encrypted tables in the database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3910
+msgid ""
+"In this case, you must drop the dependent objects manually.  Alternatively, "
+"you can run the <literal>DROP EXTENSION ... CASCADE</literal> command to "
+"drop all dependent objects automatically."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3916
+msgid ""
+"Note that the <literal>DROP EXTENSION</literal> command does not delete the "
+"<literal>pg_tde</literal> data files related to the database."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3923
+msgid ""
+"Run the <literal>DROP EXTENSION</literal> command against every database "
+"where you have enabled the <literal>pg_tde</literal> extension, if the goal "
+"is to completely remove the extension. This also includes the template "
+"databases, in case <literal>pg_tde</literal> was previously enabled there."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3933
+msgid ""
+"Remove any reference to <literal>pg_tde</literal> GUC variables from the "
+"<productname>Tantor SE</productname> configuration file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3939
+msgid ""
+"Modify the <literal>shared_preload_libraries</literal> and remove the "
+"‘pg_tde’ from it. Use the <literal>ALTER SYSTEM</literal> command for this "
+"purpose, or edit the configuration file."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><warning><para>
+#: doc/src/sgml/pg_tde_en.sgml:3946
+msgid ""
+"Once <literal>pg_tde</literal> is removed from the "
+"<literal>shared_preload_libraries</literal>, reading any leftover encrypted "
+"files will fail. Removing the extension from the "
+"<literal>shared_preload_libraries</literal> is also possible if the "
+"extension is still installed in some databases."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><warning><para>
+#: doc/src/sgml/pg_tde_en.sgml:3949
+msgid ""
+"Make sure to do this only if the server has no encrypted files in its data "
+"directory."
+msgstr ""
+
+#. type: Content of: <sect1><sect2><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde_en.sgml:3955
+msgid ""
+"Start or restart the <productname>Tantor SE</productname> cluster to apply "
+"the changes."
+msgstr ""
