@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sect1 id="pg_cluster">
+<title>pg_cluster</title>
+<para>
+    This section describes how to deploy <literal>pg_cluster</literal>
+    using <literal>ansible</literal> based automation tools. The
+    following text will present examples of commands to be entered in
+    the terminal to prepare an SSH session, check if the ansible
+    settings are correct and start the playbook. The
+    <literal>admin_user</literal> account will be used as an example
+    user. When launching commands in the Customer’s loop, this user must
+    be changed to an account that has passwordless SSH access to all
+    servers (virtual machines) specified in the
+    <literal>my_inventory</literal> file, as well as access to
+    privileged mode (root). As a result of the playbook operation, a
+    cluster of the selected DBMS (<productname>PostgreSQL</productname> or PostgreSQL) managed via
+    patroni will be deployed on the servers specified in the
+    <literal>my_inventory</literal> file.
+  </para>
+<sect2 id="about-pg_cluster">
+<title>About pg_cluster</title>
+<para>
+<emphasis role="strong">Version:</emphasis> 1.5
+    </para>
+<para>
+<ulink url="https://github.com/TantorLabs/pg_cluster">GitHub</ulink>
+</para>
+</sect2>
+<sect2 id="pg_cluster-architecture">
+<title>Architecture</title>
+<figure>
+<title>Architecture</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="images/pg_cluster/pg_cluster_architechture.png" format="PNG" width="100%"/>
+</imageobject>
+<textobject><phrase>Architecture</phrase></textobject>
+</mediaobject>
+</figure>
+</sect2>
+<sect2 id="pg_cluster-requirements">
+<title>Requirements</title>
+<para>
+      Playbook requires the following component’s version to be
+      installed:
+    </para>
+<itemizedlist>
+  <listitem>
+    <para>
+      Ansible &gt;= 2.9.10
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      Python3 (with pip module) &gt;= 3.10.0
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      psycopg2 &gt;= 2.5.1 (it’s recommended to install via pip)
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      packaging &gt;= 24 (it’s recommended to install via pip)
+    </para>
+  </listitem>
+</itemizedlist>
+</sect2>
+<sect2 id="pg_cluster-ansible-preparation">
+<title>Ansible preparation</title>
+<para>
+      Startup preparation is performed on the node from which
+      ansible-playbook will be launched, and includes the following
+      steps:
+    </para>
+<orderedlist numeration="arabic">
+<listitem>
+<para>
+          Install ansible
+        </para>
+
+<programlisting>
+sudo python3 -m pipX.X install ansible==X.X.X # where X.X(.X) represents the version of pip and Ansible specified in the Requirements block of the current instruction.
+</programlisting>
+</listitem>
+<listitem>
+<para>
+          In the
+          <literal>inventory/group_vars/prepare_nodes.yml</literal>
+          file, change the value of the
+          <literal>USERNAME:PASSWORD</literal> variables to the user
+          name and password to access the Tantor DB repository.
+        </para>
+</listitem>
+<listitem>
+<para>
+          In the <literal>inventory/group_vars/keepalived.yml</literal>
+          file, change the value of the <literal>cluster_vip_1</literal>
+          variable to the IP that will be used by keepalived for the
+          allocated virtual address — a single entry point to a DBMS cluster.
+        </para>
+</listitem>
+<listitem>
+<para>
+          Fill in the <literal>inventory</literal> configuration file
+          <literal>/opt/pg_cluster/inventory/my_inventory</literal>
+          containing a list of hosts and their IP addresses.
+        </para>
+</listitem>
+</orderedlist>
+<para>
+      After filling in the <literal>my_inventory</literal> file, it is
+      recommended to make sure that all servers are available to connect
+      to them via SSH with the required user. To do this, run the
+      following command in the terminal:
+    </para>
+
+<programlisting>
+ansible all -i inventory/my_inventory -m ansible.builtin.setup -a "filter=ansible_hostname" -u admin_user
+</programlisting>
+<para>
+      The result of the command above will be a response from each of
+      the available servers (virtual machines) in the following format:
+    </para>
+<programlisting>
+&lt;hostname_from_inventory_file&gt; | SUCCESS =&gt; {
+    "ansible_facts": {
+        "ansible_hostname": "&lt;device_hostname&gt;",
+        "discovered_interpreter_python": "/usr/bin/&lt;host_python_version&gt;"
+    },
+    "changed": false
+}
+</programlisting>
+<para>
+      This output for each server described in
+      <literal>my_inventory</literal> file means successful connection
+      to it via SSH. If as a result of the response from any server
+      (virtual machine) the message differed from the above template -
+      check whether it is possible to connect to it via a key from the
+      user name passed using the <literal>-u</literal> flag. If it is
+      necessary to connect only with password entry (without using keys)
+      - it is necessary to add <literal>-kK</literal> flags to the
+      command launch and enter the password for SSH connection
+      (<literal>-k</literal> flag) and for user to switch to privileged
+      mode (root) (<literal>-K</literal> flag).
+    </para>
+<para>
+      Pay attention to the value of the
+      <literal>ansible_hostname</literal> variable in the command
+      output. If the value is <literal>localhost</literal> or
+      <literal>localhost.localdomain</literal>, check the
+      <literal>/etc/hosts</literal> file of the machines with incorrect
+      output. Ensure that the real device hostname is set
+      <emphasis role="strong">before</emphasis> localhost on the line
+      containing <literal>127.0.0.1</literal>.
+    </para>
+</sect2>
+<sect2 id="pg_cluster-launch-features">
+<title>Launch Features</title>
+<para>
+      The playbook allows the possibility of separating the
+      <literal>pg_data</literal>, <literal>pg_wal</literal> and
+      <literal>pg_log</literal> directories. If it is necessary to place
+      WAL logs in a separate folder, it is required to make changes to
+      the <literal>inventory/groupvars/patroni.yml</literal> file:
+    </para>
+<itemizedlist spacing="compact">
+<listitem>
+<para>
+          remove the comment for the
+          <literal>patroni_pg_wal_dir</literal> variable and specify the
+          directory for placing WAL logs in it;
+        </para>
+</listitem>
+<listitem>
+<para>
+          for the <literal>patroni_bootstrap_initdb</literal> variable
+          add the <literal>waldir</literal> parameter and check that it
+          refers to the <literal>patroni_pg_wal_dir</literal> variable;
+        </para>
+</listitem>
+<listitem>
+<para>
+          for the selected replica creation method (by default
+          <literal>patroni_pg_basebackup</literal>) add
+          <literal>waldir</literal> parameter with
+          <literal>bulk_wal_dir</literal> value;
+        </para>
+</listitem>
+</itemizedlist>
+<para>
+      In case it is necessary to place LOGs: remove the comment for the
+      variable <literal>patroni_pg_pg_log_dir</literal> and in it
+      specify the directory for placing LOG logs;
+    </para>
+</sect2>
+<sect2 id="pg_cluster-playbook-launch">
+<title>Playbook launch</title>
+<para>
+      One of the playbook tasks is executed on the same node from which
+      ansible is launched (control server). In case the user under which
+      ansible is run does not have passwordless access to root mode on
+      this server, it is necessary to add the <literal>-K</literal> flag
+      to the start command and enter the password.
+    </para>
+<para>
+      By default, the playbook does not attempt to connect to Tantor
+      repositories and requires the following packages to be available
+      within the system:
+    </para>
+<itemizedlist spacing="compact">
+<listitem>
+<para>
+          etcd-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          python3-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          patroni-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          pg_configurator-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          haproxy-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          keepalived-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          pgbouncer-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          wal-g-tantor-all
+        </para>
+</listitem>
+<listitem>
+<para>
+          tantor DBMS
+        </para>
+</listitem>
+</itemizedlist>
+<para>
+      Pay attention to last point from the list above. Tantor package
+      should match environment that is used during playbook launch. For
+      example if you want to install
+      <literal>tantor-CONF_EDITION_SHORT_NAME__-server-CONF_PG_MAJOR_VERSION__</literal> DBMS using command
+      <literal>ansible-playbook -i inventory/my_inventory -u admin_user -e "postgresql_vendor=tantordb edition=CONF_EDITION_SHORT_NAME__ major_version=CONF_PG_MAJOR_VERSION__" pg-cluster.yaml -K</literal>
+      make sure that package <literal>tantor-CONF_EDITION_SHORT_NAME__-server-CONF_PG_MAJOR_VERSION__</literal> is
+      available in your local repository.
+    </para>
+<para>
+      If the playbook is run in an environment with internet access, you
+      can leverage the most up-to-date components included in the
+      solution. To do this, add the flag
+      <literal>add_nexus_repo=true</literal> and provide the connection
+      details for the repositories in the file
+      <literal>inventory/group_vars/prepare_nodes.yml</literal>.
+    </para>
+<para>
+      There are several options to run Ansible, with the option to
+      install:
+    </para>
+<itemizedlist spacing="compact">
+<listitem>
+<para>
+          <productname>PostgreSQL</productname>
+        </para>
+</listitem>
+<listitem>
+<para>
+          classic PostgreSQL as a DBMS.
+        </para>
+</listitem>
+</itemizedlist>
+<para>
+      Use the following command to install <productname>PostgreSQL</productname>:
+    </para>
+
+<programlisting>
+ansible-playbook -i inventory/my_inventory \
+  -u admin_user -e "postgresql_vendor=tantordb edition=CONF_EDITION_SHORT_NAME__ major_version=CONF_PG_MAJOR_VERSION__" pg-cluster.yaml -K
+</programlisting>
+<para>
+      Use the following command to install the classic PostgreSQL DBMS:
+    </para>
+
+<programlisting>
+ansible-playbook -i inventory/my_inventory \
+  -u admin_user -e "postgresql_vendor=classic major_version=11" pg-cluster.yaml -K
+</programlisting>
+<para>
+      In the commands above, replace the value of the
+      <literal>major_version</literal> parameter with the DBMS version
+      to be installed, the value of <literal>postgresql_vendor</literal>
+      with the DBMS vendor and the <literal>admin_user</literal>
+      parameter with the user who has passwordless access to the servers
+      from the <literal>my_inventory</literal> file with the ability to
+      switch to privileged mode (root) without prompting the password.
+      For <productname>PostgreSQL</productname> you also need to specify DBMS edition.
+    </para>
+</sect2>
+<sect2 id="pg_cluster-launch-with-internet-access">
+<title>Launch with internet access</title>
+<para>
+      It’s possible to launch the playbook with external internet
+      access.
+    </para>
+
+<programlisting>
+ansible-playbook -i inventory/my_inventory \
+  -u admin_user -e "postgresql_vendor=tantordb edition=CONF_EDITION_SHORT_NAME__ major_version=CONF_PG_MAJOR_VERSION__ add_nexus_repo=true" pg-cluster.yaml -K
+</programlisting>
+<para>
+      In that case, make sure that connection details are provided in
+      the file
+      <literal>inventory/group_vars/prepare_nodes.yml</literal>.
+    </para>
+</sect2>
+<sect2 id="pg_cluster-usage-examples">
+<title>Usage examples</title>
+<para>
+      Below you can find some common commands for working with the
+      software products included in the <literal>pg_cluster</literal>
+      solution. Note that the commands and their result may differ
+      depending on the software versions used.
+    </para>
+<sect3 id="pg_cluster-work-with-etcd">
+<title>Work with etcd:</title>
+
+<programlisting>
+# on NODE_1
+e_host=(
+  /opt/tantor/usr/bin/etcdctl
+  --endpoints=https://&lt;HOST_1_IP&gt;:2379,https://&lt;HOST_2_IP&gt;:2379,https://&lt;HOST_N_IP&gt;:2379
+  --cacert=/opt/tantor/etc/patroni/ca.pem
+  --cert=/opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.pem  
+  --key=/opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;-key.pem
+)
+
+# list etcd members
+ETCDCTL_API=3 "${e_host[@]}" member list --debug
+
+# check version
+ETCDCTL_API=3  "${e_host[@]}" version
+
+# get key value ("main" is "patroni_scope")
+ETCDCTL_API=3  "${e_host[@]}" get /service/main/config
+
+# cleanup patroni cluster configuration
+ETCDCTL_API=3  "${e_host[@]}" del /service/main --prefix
+</programlisting>
+</sect3>
+<sect3 id="pg_cluster-manual-create-user">
+<title>Manual create user:</title>
+
+<programlisting>
+# create user
+su - postgres -c "psql -A -t -d postgres -c \"CREATE ROLE replicator WITH REPLICATION LOGIN PASSWORD 'repuserpasswd'\""
+# check user
+su - postgres -c "psql -A -t -d postgres -c \"select * from pg_roles where rolname = 'replicator'\""
+</programlisting>
+</sect3>
+<sect3 id="pg_cluster-manage-patroni-cluster">
+<title>Manage Patroni Cluster</title>
+<para>
+        Patroni includes a command called <literal>patronictl</literal>
+        which can be used to control the cluster. Let`s check the status
+        of the cluster:
+      </para>
+
+<programlisting>
+root@node1:~# patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml list
++ Cluster: main (7351350415269982209) --+---------+-----------+----+-----------+
+| Member  | Host            | Role    | State     | TL | Lag in MB |
++---------+-----------------+---------+-----------+----+-----------+
+| node1   | xxx.xxx.xxx.xxx | Leader  | running   |  1 |           |
+| node2   | yyy.yyy.yyy.yyy | Replica | streaming |  1 |         0 |
+| node3   | zzz.zzz.zzz.zzz | Replica | streaming |  1 |         0 |
++---------+-----------------+---------+-----------+----+-----------+
+</programlisting>
+<para>
+<literal>patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml edit-config</literal>
+        should be used only to manage global cluster configuration. It
+        should not contain any node-specific settings like
+        <literal>connect_address</literal>, <literal>listen</literal>,
+        <literal>data_dir</literal> and so on.
+      </para>
+<para>
+        Update DCS <literal>pg_hba</literal> settings:
+      </para>
+
+<programlisting>
+cat &gt; pg_hba.conf &lt;&lt; EOL
+host replication replicator 0.0.0.0/0 md5
+local all all  trust
+host all all 127.0.0.1/32 trust
+host all all localhost trust
+EOL
+
+cat pg_hba.conf | jq -R -s 'split("\n") | .[0:-1] | {"postgresql": {"pg_hba": .}}' | \
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml edit-config --apply - --force main
+
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml show-config
+</programlisting>
+<para>
+        Change <literal>postgresql.conf</literal> settings:
+      </para>
+
+<programlisting>
+cat &gt; postgresql.conf &lt;&lt; EOL
+"postgresql": {
+"parameters": {
+    "max_connections" : 101
+}
+}
+EOL
+
+cat postgresql.conf | patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml edit-config --apply - --force main
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml list
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml restart main
+</programlisting>
+<para>
+        Make <literal>switchover</literal>:
+      </para>
+
+<programlisting>
+root@node1:~# patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml switchover
+Current cluster topology
++ Cluster: main (7351350415269982209) --+---------+-----------+----+-----------+
+| Member| Host            | Role    | State     | TL | Lag in MB |
++-------+-----------------+---------+-----------+----+-----------+
+| node1 | xxx.xxx.xxx.xxx | Leader  | running   |  1 |           |
+| node2 | yyy.yyy.yyy.yyy | Replica | streaming |  1 |         0 |
+| node3 | zzz.zzz.zzz.zzz | Replica | streaming |  1 |         0 |
++-------+-----------------+---------+-----------+----+-----------+
+Primary [node1]:
+Candidate ['node2', 'node3'] []: node2
+When should the switchover take place (e.g. 2024-04-02T13:51 )  [now]:
+Are you sure you want to switchover cluster main, demoting current leader node1? [y/N]: y
+2024-04-02 12:51:28.04774 Successfully switched over to "node2"
++ Cluster: main (7351350415269982209) --+---------+-----------+----+-----------+
+| Member| Host            | Role    | State     | TL | Lag in MB |
++-------+-----------------+---------+-----------+----+-----------+
+| node1 | xxx.xxx.xxx.xxx | Leader  | streaming |  2 |           |
+| node2 | yyy.yyy.yyy.yyy | Replica | running   |  2 |         0 |
+| node3 | zzz.zzz.zzz.zzz | Replica | streaming |  2 |         0 |
++-------+-----------------+---------+-----------+----+-----------+
+</programlisting>
+<para>
+        Switch to Asynchronous mode (default mode):
+      </para>
+
+<programlisting>
+cat &gt; postgresql.conf &lt;&lt; EOL
+"postgresql": {
+"parameters": {
+    "synchronous_commit" : "local"
+}
+}
+"synchronous_mode": false
+"synchronous_mode_strict": false
+EOL
+cat postgresql.conf | patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml edit-config --apply - --force main
+</programlisting>
+<para>
+        Switch to Synchronous mode:
+      </para>
+
+<programlisting>
+cat &gt; postgresql.conf &lt;&lt; EOL
+"postgresql": {
+"parameters": {
+    "synchronous_commit" : "remote_apply"
+}
+}
+"synchronous_mode": true
+"synchronous_mode_strict": true
+EOL
+cat postgresql.conf | patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml edit-config --apply - --force main
+</programlisting>
+<figure>
+<title>synchronous_commit</title>
+<mediaobject>
+<imageobject>
+<imagedata fileref="images/pg_cluster/synchronous_commit.png" format="PNG" width="100%"/>
+</imageobject>
+<textobject><phrase>synchronous_commit</phrase></textobject>
+</mediaobject>
+</figure>
+<para>
+        Reinit failed node, in case if output of
+        <literal>patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml list</literal>
+        provides the information about failed state of the node:
+      </para>
+
+<programlisting>
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml list
+&gt;&gt;
+root@node1:~# patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml list
++ Cluster: main (7351350415269982209) --+------------+-----------+----+-----------+
+| Member  | Host            | Role    | State        | TL | Lag in MB |
++---------+-----------------+---------+--------------+----+-----------+
+| node1   | xxx.xxx.xxx.xxx | Leader  | running      |  1 |           |
+| node2   | yyy.yyy.yyy.yyy | Replica | streaming    |  1 |         0 |
+| node3   | zzz.zzz.zzz.zzz | Replica | start failed |  1 |         0 |
++---------+-----------------+---------+--------------+----+-----------+
+</programlisting>
+<para>
+        Failed node can be reconfigured to join the cluster using:
+      </para>
+
+<programlisting>
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml reinit node3
+&gt;&gt;
+root@node1:~# patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml list
++ Cluster: main (7351350415269982209) --+---------+-----------+----+-----------+
+| Member  | Host            | Role    | State     | TL | Lag in MB |
++---------+-----------------+---------+-----------+----+-----------+
+| node1   | xxx.xxx.xxx.xxx | Leader  | running   |  1 |           |
+| node2   | yyy.yyy.yyy.yyy | Replica | streaming |  1 |         0 |
+| node3   | zzz.zzz.zzz.zzz | Replica | streaming |  1 |         0 |
++---------+-----------------+---------+-----------+----+-----------+
+</programlisting>
+</sect3>
+</sect2>
+<sect2 id="pg_cluster-cluster-test">
+<title>Cluster test</title>
+<para>
+      After successful cluster deployment:
+    </para>
+
+<programlisting>
+# on deployment node run test, the test will take about 5 minutes
+# please use the latest possible version of python3
+# please run commands from the pg_cluster folder
+python3 tools/pg_cluster_backend/pg_cluster_backend.py --operations=10000
+</programlisting>
+<para>
+      To emulate deadlocks, needs to change parameter
+      <literal>test.accounts = 100 -&gt; 10</literal> in
+      <literal>tools/pg_cluster_backend/conf/pg_cluster_backend.conf</literal>.
+    </para>
+<para>
+      Simultaneously with the test, you should perform actions with the
+      cluster:
+    </para>
+
+<programlisting>
+# on NODE_1
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml list
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml restart main
+shutdown -r now
+
+# on NODE_2
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE2_HOSTNAME&gt;.yml list
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE2_HOSTNAME&gt;.yml restart main
+shutdown -r now
+
+# on NODE_3
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE3_HOSTNAME&gt;.yml list
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE3_HOSTNAME&gt;.yml restart main
+shutdown -r now
+
+# on NODE_1
+patronictl -c /opt/tantor/etc/patroni/&lt;NODE1_HOSTNAME&gt;.yml switchover
+
+# on primary node
+su - postgres -c "psql -A -t -d test_db -c \"
+    select pg_terminate_backend(pid)
+    from pg_stat_activity
+    where application_name = 'pg_cluster_backend'\""
+
+# on NODE_1
+systemctl stop patroni
+
+# on NODE_2
+systemctl stop patroni
+
+# on NODE_1
+systemctl start patroni
+
+# on NODE_2
+systemctl start patroni
+
+# restart all nodes in random order
+</programlisting>
+<literallayout>After completing these steps, the test backend should continue work.
+Check how many transaction losses on switchover with asynchronous replication:</literallayout>
+
+<programlisting>
+SELECT
+    sum(balance)::numeric - -- result balance
+    ((select count(1) from public.accounts) * 100 + 10000) -- where "--operations=10000"
+FROM public.accounts
+
+-- positive value means lost transactions
+-- negative value means successfully committed transactions in which the backend received an exception
+</programlisting>
+</sect2>
+</sect1>
