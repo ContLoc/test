@@ -2,6 +2,8 @@
 <sect1 id="pg_cluster">
 <title>pg_cluster</title>
 <para>
+    TEST TEST TEST ETSR 
+    TETETETETESTETE 
     This section describes how to deploy <literal>pg_cluster</literal>
     using <literal>ansible</literal> based automation tools. The
     following text will present examples of commands to be entered in
