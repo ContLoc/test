@@ -43,7 +43,7 @@ msgid ""
 "<literal>pg_tde</literal> extension that provides Transparent Data "
 "Encryption (TDE) to protect data at rest. <literal>pg_tde</literal> ensures "
 "that the data stored on disk is encrypted, and that no one can read it "
-"without the proper encryption keys, even if they gain access to the physical "
+"without the proper encryption keys, even if they gain access to the physical test test test ettete"
 "storage media."
 msgstr ""
 
@@ -54,7 +54,7 @@ msgstr ""
 
 #. type: Content of: <sect1><sect2><sect3><title>
 #: doc/src/sgml/pg_tde_en.sgml:15
-msgid "Installation"
+msgid "Installation test ststststsjbvmc"
 msgstr ""
 
 #. type: Content of: <sect1><sect2><sect3><para>
