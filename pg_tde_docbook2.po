@@ -1,0 +1,295 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2025-07-14 13:08+0300\n"
+"PO-Revision-Date: 2025-07-14 12:40+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: Content of: <sect1><title>
+#: doc/src/sgml/pg_tde.sgml:3
+msgid "pg_tde"
+msgstr "pg_tde"
+
+#. type: Content of: <sect1><para>
+#: doc/src/sgml/pg_tde.sgml:5
+msgid ""
+"<literal>pg_tde</literal> extension that provides Transparent Data "
+"Encryption (TDE) to protect data at rest. <literal>pg_tde</literal> ensures "
+"that the data stored on disk is encrypted, and that no one can read it "
+"without the proper encryption keys, even if they gain access to the physical "
+"storage media."
+msgstr ""
+"Расширение <literal>pg_tde</literal> предоставляет Прозрачное Шифрование "
+"Данных (TDE) для защиты данных в состоянии покоя. <literal>pg_tde</literal> "
+"гарантирует, что данные, сохранённые на диске, зашифрованы, и никто не "
+"сможет их прочитать без соответствующих ключей шифрования, даже если получит "
+"доступ к физическому носителю."
+
+#. type: Content of: <sect1><sect2><title>
+#: doc/src/sgml/pg_tde.sgml:13
+msgid "Quickstart"
+msgstr "Быстрый старт"
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde.sgml:15
+msgid "Installation"
+msgstr "Установка"
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:17
+#, fuzzy
+#| msgid ""
+#| "The extension <emphasis role=\"strong\">must be added</emphasis> to the "
+#| "<literal>shared_preload_libraries</literal>.  You also need to restart "
+#| "the server after changing <literal>shared_preload_libraries</literal>."
+msgid ""
+"The extension must be added to the <literal>shared_preload_libraries</"
+"literal>.  You also need to restart the server after changing "
+"<literal>shared_preload_libraries</literal>."
+msgstr ""
+"Расширение <emphasis role=\"strong\">необходимо добавить</emphasis> в "
+"параметр <literal>shared_preload_libraries</literal>. После изменения "
+"<literal>shared_preload_libraries</literal> также нужно перезапустить сервер."
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde.sgml:21
+#, no-wrap
+msgid "  shared_preload_libraries = 'pg_tde'\n"
+msgstr "  shared_preload_libraries = 'pg_tde'\n"
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:24
+#, fuzzy
+#| msgid "Then you should install the <literal>pg_tde</literal> extension."
+msgid "Then you should install the <literal>pg_tde</literal> extension:"
+msgstr "Затем следует установить расширение <literal>pg_tde</literal>."
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde.sgml:27
+#, no-wrap
+msgid "CREATE EXTENSION pg_tde;\n"
+msgstr "CREATE EXTENSION pg_tde;\n"
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:30
+msgid ""
+"If GOST algorithms are needed (magma or kuznyechik), install the required "
+"OpenSSL modules. You can build from source or install via packages."
+msgstr ""
+"Если необходимы алгоритмы ГОСТ (magma или kuznyechik), установите "
+"соответствующие модули OpenSSL. Вы можете собрать их из исходного кода или "
+"установить из пакетов."
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:35
+msgid ""
+"There is list of known packages for different distributions that contain "
+"GOST module for OpenSSL:"
+msgstr ""
+"Список известных пакетов для различных дистрибутивов, содержащих модуль ГОСТ "
+"для OpenSSL:"
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde.sgml:41
+msgid "<literal>libgost-astra</literal> - Astra Linux"
+msgstr "<literal>libgost-astra</literal> — Astra Linux"
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde.sgml:46
+msgid "<literal>openssl-gost-engine</literal> - AltLinux"
+msgstr "<literal>openssl-gost-engine</literal> — AltLinux"
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde.sgml:51
+msgid ""
+"<literal>libengine-gost-openssl</literal> or <literal>libengine-gost-"
+"openssl1.1</literal> - Debian/Ubuntu"
+msgstr ""
+"<literal>libengine-gost-openssl</literal> или <literal>libengine-gost-"
+"openssl1.1</literal> — Debian/Ubuntu"
+
+#. type: Content of: <sect1><sect2><sect3><orderedlist><listitem><para>
+#: doc/src/sgml/pg_tde.sgml:57
+msgid "<literal>openssl-gost-engine</literal> - RedOS"
+msgstr "<literal>openssl-gost-engine</literal> — RedOS"
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:62
+msgid ""
+"For other distributions you have to build it from source code.  Project "
+"source code is located in <ulink url=\"https://github.com/gost-engine/"
+"engine\"> GitHub repository</ulink>."
+msgstr ""
+"Для других дистрибутивов необходимо собирать модуль из исходного кода. "
+"Исходный код проекта находится в <ulink url=\"https://github.com/gost-engine/"
+"engine\">репозитории GitHub</ulink>."
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:67
+msgid ""
+"When GOST modules installed you might need to update OpenSSL configuration.  "
+"Some packages (i.e. <literal>libgost-astra</literal>) do it automatically.  "
+"For others you might have to update configuration manually."
+msgstr ""
+"После установки модулей ГОСТ может потребоваться обновить конфигурацию "
+"OpenSSL. Некоторые пакеты (например, <literal>libgost-astra</literal>) "
+"делают это автоматически. В остальных случаях придётся обновить конфигурацию "
+"вручную."
+
+#. type: Content of: <sect1><sect2><sect3><title>
+#: doc/src/sgml/pg_tde.sgml:73
+msgid "Creating an encrypted table"
+msgstr "Создание зашифрованной таблицы"
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:75
+msgid "Register a key provider:"
+msgstr "Зарегистрируйте поставщика ключей:"
+
+#. type: Content of: <sect1><sect2><sect3><programlisting>
+#: doc/src/sgml/pg_tde.sgml:78
+#, no-wrap
+msgid "  SELECT pg_tde_add_database_key_provider_file('file-provider', '/tmp/test-file-provider');\n"
+msgstr "  SELECT pg_tde_add_database_key_provider_file('file-provider', '/tmp/test-file-provider');\n"
+
+#. type: Content of: <sect1><sect2><sect3><note><para>
+#: doc/src/sgml/pg_tde.sgml:82
+msgid ""
+"<literal>file-provider</literal> can only be used for debugging purposes."
+msgstr ""
+"<literal>file-provider</literal> может использоваться только для целей "
+"отладки."
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:86
+msgid "WELCOME NEW STRINGS!"
+msgstr ""
+
+#. type: Content of: <sect1><sect2><sect3><para><table><title>
+#: doc/src/sgml/pg_tde.sgml:101
+msgid "Parameter Name Changes"
+msgstr "Изменения Названий Параметров"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><thead><row><entry>
+#: doc/src/sgml/pg_tde.sgml:105
+msgid "Tantor DB 15"
+msgstr "Tantor DB 15"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><thead><row><entry>
+#: doc/src/sgml/pg_tde.sgml:106
+msgid "Tantor DB 16"
+msgstr "Tantor DB 16"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><thead><row><entry>
+#: doc/src/sgml/pg_tde.sgml:107
+msgid "Status"
+msgstr "Статус"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:112
+msgid "commit_ts_buffers"
+msgstr "commit_ts_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:113
+msgid "commit_timestamp_buffers"
+msgstr "commit_timestamp_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:114 doc/src/sgml/pg_tde.sgml:119
+#: doc/src/sgml/pg_tde.sgml:124 doc/src/sgml/pg_tde.sgml:129
+msgid "changed"
+msgstr "изменено"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:117
+msgid "serial_buffers"
+msgstr "serial_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:118
+msgid "serializable_buffers"
+msgstr "serializable_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:122
+msgid "subtrans_buffers"
+msgstr "subtrans_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:123
+msgid "subtransaction_buffers"
+msgstr "subtransaction_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:127
+msgid "xact_buffers"
+msgstr "xact_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:128
+msgid "transaction_buffers"
+msgstr "transaction_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:132
+msgid "multixact_members_buffers"
+msgstr "multixact_members_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:133
+msgid "multixact_member_buffers"
+msgstr "multixact_member_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:134 doc/src/sgml/pg_tde.sgml:139
+#: doc/src/sgml/pg_tde.sgml:144
+msgid "unchanged"
+msgstr "без изменений"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:137
+msgid "multixact_offsets_buffers"
+msgstr "multixact_offsets_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:138
+msgid "multixact_offset_buffers"
+msgstr "multixact_offset_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para><table><tgroup><tbody><row><entry>
+#: doc/src/sgml/pg_tde.sgml:142 doc/src/sgml/pg_tde.sgml:143
+msgid "notify_buffers"
+msgstr "notify_buffers"
+
+#. type: Content of: <sect1><sect2><sect3><para>
+#: doc/src/sgml/pg_tde.sgml:89
+msgid ""
+"Tantor DB version 16 uses new naming conventions for SLRU cache size "
+"parameters.  To migrate from version 15 to version 16 with respect to SLRU "
+"cache size parameters, use the script <literal>upgrade-SLRU-from-TT_15-to-"
+"TT_16-version.sh</literal>.  The script is installed in <literal>/opt/tantor/"
+"db/16/tools/slru_upgrader/</literal>.  For script usage, please define the "
+"<parameter>PGDATA</parameter> variable, which should specify the path to the "
+"cluster data directory of the migration target version (16).  Help "
+"information is also available with the command <literal>/opt/tantor/db/16/"
+"tools/slru_upgrader/upgrade-SLRU-from-TT_15-to-TT_16-version.sh --help</"
+"literal>.  The following table summarizes the changes in parameter names "
+"from Tantor DB 15 to Tantor DB 16: <placeholder type=\"table\" id=\"0\"/>"
+msgstr ""
+"В версии Tantor DB 16 используются новые наименования параметров размера "
+"кэша SLRU. Для перехода с версии 15 на версию 16 в части параметров размера "
+"кэша SLRU используйте скрипт <literal>upgrade-SLRU-from-TT_15-to-TT_16-"
+"version.sh</literal>. Скрипт установлен в <literal>/opt/tantor/db/16/tools/"
+"slru_upgrader/</literal>. Для его использования необходимо задать переменную "
+"<parameter>PGDATA</parameter>, указывающую путь к каталогу данных кластера "
+"для версии назначения (16). Справка по использованию доступна по команде "
+"<literal>/opt/tantor/db/16/tools/slru_upgrader/upgrade-SLRU-from-TT_15-to-"
+"TT_16-version.sh --help</literal>. В таблице ниже представлены изменения в "
+"названиях параметров между Tantor DB 15 и Tantor DB 16: <placeholder "
+"type=\"table\" id=\"0\"/>"
